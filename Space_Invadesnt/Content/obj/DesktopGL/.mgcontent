@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Profile>Reach</Profile>
+  <Platform>DesktopGL</Platform>
+  <Config />
+  <SourceFiles>
+    <File>c:/Users/carlo/Space_Invadesnt/Space_Invadesnt/Content/Imagenes/Enemigos/asteroide.png</File>
+    <File>c:/Users/carlo/Space_Invadesnt/Space_Invadesnt/Content/Imagenes/Fondos/fondo1.png</File>
+    <File>c:/Users/carlo/Space_Invadesnt/Space_Invadesnt/Content/Imagenes/Fondos/fondo2.jpg</File>
+    <File>c:/Users/carlo/Space_Invadesnt/Space_Invadesnt/Content/Imagenes/Jugador/nave_ncpu.png</File>
+  </SourceFiles>
+  <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+  </DestFiles>
+</SourceFileCollection>

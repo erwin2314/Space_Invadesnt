@@ -1,0 +1,5 @@
+Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"c:/Users/carlo/Space_Invadesnt/Space_Invadesnt/Content/Imagenes/Enemigos/asteroide.png","c:/Users/carlo/Space_Invadesnt/Space_Invadesnt/Content/bin/DesktopGL/Imagenes/Enemigos/asteroide.xnb","TextureProcessor","Texture2DContent",6531,16469,0.1837875
+"c:/Users/carlo/Space_Invadesnt/Space_Invadesnt/Content/Imagenes/Fondos/fondo1.png","c:/Users/carlo/Space_Invadesnt/Space_Invadesnt/Content/bin/DesktopGL/Imagenes/Fondos/fondo1.xnb","TextureProcessor","Texture2DContent",824407,3686485,0.1989826
+"c:/Users/carlo/Space_Invadesnt/Space_Invadesnt/Content/Imagenes/Fondos/fondo2.jpg","c:/Users/carlo/Space_Invadesnt/Space_Invadesnt/Content/bin/DesktopGL/Imagenes/Fondos/fondo2.xnb","TextureProcessor","Texture2DContent",29729,3686485,0.1869403
+"c:/Users/carlo/Space_Invadesnt/Space_Invadesnt/Content/Imagenes/Jugador/nave_ncpu.png","c:/Users/carlo/Space_Invadesnt/Space_Invadesnt/Content/bin/DesktopGL/Imagenes/Jugador/nave_ncpu.xnb","TextureProcessor","Texture2DContent",9575,16469,0.0045145
