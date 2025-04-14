@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>C:/Users/carlo/Space_Invadesnt/Space_Invadesnt/Content/Imagenes/Jugador/nave_ncpu.png</SourceFile>
-  <SourceTime>2025-04-12T12:26:01.8916692-06:00</SourceTime>
-  <DestFile>C:/Users/carlo/Space_Invadesnt/Space_Invadesnt/Content/bin/DesktopGL/Content/Imagenes/Jugador/nave_ncpu.xnb</DestFile>
-  <DestTime>2025-04-12T14:06:28.7569988-06:00</DestTime>
+  <SourceFile>C:/Users/carlo/OneDrive/Desktop/Monogame/Space Invadernt/Space_Invadesnt/Space_Invadesnt/Content/Imagenes/Jugador/nave_ncpu.png</SourceFile>
+  <SourceTime>2025-04-13T20:23:34.7182787-06:00</SourceTime>
+  <DestFile>C:/Users/carlo/OneDrive/Desktop/Monogame/Space Invadernt/Space_Invadesnt/Space_Invadesnt/Content/bin/DesktopGL/Content/Imagenes/Jugador/nave_ncpu.xnb</DestFile>
+  <DestTime>2025-04-13T20:24:37.5886468-06:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2024-08-16T11:05:56-06:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

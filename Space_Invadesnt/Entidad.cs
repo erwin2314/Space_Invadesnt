@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Input;
 
 public class Entidad
 {
+    public bool activa;
     public Vector2 posicion;
     public Texture2D imagen;
     private int prioridad_de_dibujado;
@@ -15,35 +16,40 @@ public class Entidad
     public float velocidad_de_rotacion;
     private Rectangle rectangulo_de_imagen;
     private Rectangle rectangulo_de_colision;
-    private Vector2 origen_de_imagen;
-    private Vector2 origen_de_colision;
+    public Vector2 origen_de_imagen;
+    public Vector2 origen_de_colision;
     public float fuerza_de_aceleracion;
     public float offset_angulo;
     private bool es_jugador;
     public Entidad
     (
-        Vector2 posicion,
+        Vector2 posicion = new Vector2(),
         Texture2D imagen = null,
         int prioridad_de_dibujado = 0,
         float angulo = 0,
         float velocidad_de_rotacion = 0,
         float offset_angulo = 0,
         float fuerza_de_aceleracion = 0,
-        bool es_jugador = false
+        bool es_jugador = false,
+        bool activa = true,
+        Vector2 velocidad = new Vector2(),
+        Vector2 aceleracion = new Vector2()
     )
     {
         this.posicion = posicion;
         this.imagen = imagen;
         this.prioridad_de_dibujado = prioridad_de_dibujado;
         this.es_jugador = es_jugador;
+        this.activa = activa;
 
-        this.velocidad = new Vector2(0,0);
-        this.aceleracion = new Vector2(0,0);
+        this.velocidad = velocidad;
+        this.aceleracion = aceleracion;
         this.fuerza_de_aceleracion = fuerza_de_aceleracion;
 
-        this.angulo = angulo;
+        
         this.velocidad_de_rotacion = velocidad_de_rotacion;
         this.offset_angulo = offset_angulo;
+        this.angulo = angulo + offset_angulo;
 
         if (this.imagen == null)
         {
@@ -70,10 +76,16 @@ public class Entidad
 
 
     //------CambiarOrigenDeImagen---------------------
-    public void CambiarOrigenDeImagen(Vector2 vector2)
+    //es lo que se considera el centro de la imagen
+    //la posicion es con respecto a la posicion de la entidad
+    
+    //Cambia el origen de la imagen con un punto en forma de vector
+    public void CambiarOrigenDeImagen(Vector2 punto)
     {
-        origen_de_imagen = vector2;
+        origen_de_imagen = punto;
     }
+
+    //Cambia el origen de la imagen con los valores de x,y directamente
     public void CambiarOrigenDeImagen(float x, float y)
     {
         origen_de_imagen = new Vector2(x, y);
@@ -82,14 +94,21 @@ public class Entidad
 
 
     //------CambiarRectangulo_de_imagen---------------------
+    //El rectangulo de la imagen es el espacio o el "canvas" en el que se pinta la textura2d
+
+    //cambia el rectangulo de la imagen directamente por otro rectangulo
     public void CambiarRectangulo_de_imagen(Rectangle rectangle)
     {
         rectangulo_de_imagen = rectangle;
     }
+
+    //cambia el rectangulo de la imagen creando otro rectangulo pidiendo (posicion x, posicion y, ancho, alto)
     public void CambiarRectangulo_de_imagen(int x1, int y1, int ancho, int alto)
     {
         rectangulo_de_imagen = new Rectangle(x1,y1,ancho,alto);
     }
+
+    //cambia el alto y ancho del rectangulo de la imagen por el alto y ancho de la textura2d de la entidad
     public void CambiarRectangulo_de_imagen()
     {
         rectangulo_de_imagen.Height = imagen.Height;
@@ -188,7 +207,25 @@ public class Entidad
             aceleracion = new Vector2(0,0);
         }
     }
+
+    public Vector2 MoverseAUnPunto(Vector2 punto)
+    {
+        Vector2 direccion = DistanciaRelativa(punto);
+        float distancia = TeoremaDePitagoras(direccion);
+        float tolerancia = 1.0f;
+
+        if (distancia > tolerancia)
+        {
+            direccion.Normalize();
+            this.velocidad = this.velocidad.Length() * direccion;
+            
+            return velocidad;
+        }
+        return new Vector2(0,0);
+    }
     //------Movimiento--------------------------------
+
+    //------Updates-----------------------------------
     public void Update(KeyboardState teclado)
     {
         if (es_jugador)
@@ -200,11 +237,44 @@ public class Entidad
         else
         {
             velocidad = velocidad + aceleracion;
-            angulo = (angulo + offset_angulo) + velocidad_de_rotacion;
+            angulo = angulo + velocidad_de_rotacion;
         }
         posicion = posicion + velocidad;
     }
+    public void Update()
+    {
+        velocidad = velocidad + aceleracion;
+        angulo = angulo + velocidad_de_rotacion;
+        posicion = posicion + velocidad;
+    }
+    public void Update(Vector2 punto)
+    {
+        var velocidad_de_destino = MoverseAUnPunto(punto);
+        if (velocidad_de_destino != Vector2.Zero)
+        {
+            angulo = angulo + velocidad_de_rotacion;
+            posicion = posicion + velocidad_de_destino;
+        }
+        
+    }
+    //------Updates-----------------------------------
 
+    public Entidad Clonar()
+    {
+        return new Entidad(
+        posicion: this.posicion,
+        imagen: this.imagen,
+        prioridad_de_dibujado: this.prioridad_de_dibujado,
+        angulo: this.angulo,
+        velocidad_de_rotacion: this.velocidad_de_rotacion,
+        offset_angulo: this.offset_angulo,
+        fuerza_de_aceleracion: this.fuerza_de_aceleracion,
+        es_jugador: this.es_jugador,
+        activa: this.activa,
+        velocidad: this.velocidad,
+        aceleracion: this.aceleracion
+        );
+    }
     public void Draw(SpriteBatch spriteBatch)
     {
         spriteBatch.Begin();
