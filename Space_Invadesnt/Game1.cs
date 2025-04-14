@@ -53,7 +53,6 @@ public class Space_Invadesnt : Game
         posicion_mouse = new Vector2(mouseState.X, mouseState.Y);
 
         creador_De_Entidades.Update(gameTime,_spriteBatch, jugador.posicion);
-        Console.WriteLine(creador_De_Entidades.tiempo_transcurrido);
         jugador.MirarAUnPunto(posicion_mouse);
         jugador.Update(keyboardState);  
 
