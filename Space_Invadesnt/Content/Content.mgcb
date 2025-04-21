@@ -13,6 +13,18 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Imagenes/Balas/disparo1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Imagenes/Balas/disparo1.png
+
 #begin Imagenes/Enemigos/asteroide.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -60,4 +72,101 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Imagenes/Jugador/nave_ncpu.png
+
+#begin Imagenes/PlaceHolder/cuadrado_blanco.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Imagenes/PlaceHolder/cuadrado_blanco.png
+
+#begin Sonido/Canciones/musica_fondo1.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sonido/Canciones/musica_fondo1.mp3
+
+#begin Sonido/Canciones/musica_fondo2.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sonido/Canciones/musica_fondo2.mp3
+
+#begin Sonido/Efectos de sonido/disparo1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sonido/Efectos de sonido/disparo1.wav
+
+#begin Sonido/Efectos de sonido/disparo2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sonido/Efectos de sonido/disparo2.wav
+
+#begin Sonido/Efectos de sonido/disparo3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sonido/Efectos de sonido/disparo3.wav
+
+#begin Sonido/Efectos de sonido/explosion1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sonido/Efectos de sonido/explosion1.wav
+
+#begin Sonido/Efectos de sonido/explosion2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sonido/Efectos de sonido/explosion2.wav
+
+#begin Sonido/Efectos de sonido/explosion3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sonido/Efectos de sonido/explosion3.wav
+
+#begin Sonido/Efectos de sonido/herido1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sonido/Efectos de sonido/herido1.wav
+
+#begin Sonido/Efectos de sonido/muerte1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sonido/Efectos de sonido/muerte1.wav
+
+#begin Sonido/Efectos de sonido/muerte2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sonido/Efectos de sonido/muerte2.wav
+
+#begin Sonido/Efectos de sonido/muerte3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sonido/Efectos de sonido/muerte3.wav
+
+#begin Sonido/Efectos de sonido/muerte4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sonido/Efectos de sonido/muerte4.wav
+
+#begin Tipografias/File.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Tipografias/File.spritefont
 

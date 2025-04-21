@@ -57,3 +57,21 @@ C:\Users\carlo\OneDrive\Desktop\Monogame\Space Invadernt\Space_Invadesnt\Space_I
 C:\Users\carlo\OneDrive\Desktop\Monogame\Space Invadernt\Space_Invadesnt\Space_Invadesnt\obj\Debug\net8.0\Space_Invadesnt.pdb
 C:\Users\carlo\OneDrive\Desktop\Monogame\Space Invadernt\Space_Invadesnt\Space_Invadesnt\obj\Debug\net8.0\Space_Invadesnt.genruntimeconfig.cache
 C:\Users\carlo\OneDrive\Desktop\Monogame\Space Invadernt\Space_Invadesnt\Space_Invadesnt\obj\Debug\net8.0\ref\Space_Invadesnt.dll
+C:\Users\carlo\OneDrive\Desktop\Monogame\Space Invadernt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Imagenes\PlaceHolder\cuadrado_blanco.xnb
+C:\Users\carlo\OneDrive\Desktop\Monogame\Space Invadernt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Tipografias\File.xnb
+C:\Users\carlo\OneDrive\Desktop\Monogame\Space Invadernt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Imagenes\Balas\disparo1.xnb
+C:\Users\carlo\OneDrive\Desktop\Monogame\Space Invadernt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Sonido\Efectos de sonido\disparo1.xnb
+C:\Users\carlo\OneDrive\Desktop\Monogame\Space Invadernt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Sonido\Efectos de sonido\disparo2.xnb
+C:\Users\carlo\OneDrive\Desktop\Monogame\Space Invadernt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Sonido\Efectos de sonido\disparo3.xnb
+C:\Users\carlo\OneDrive\Desktop\Monogame\Space Invadernt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Sonido\Efectos de sonido\explosion1.xnb
+C:\Users\carlo\OneDrive\Desktop\Monogame\Space Invadernt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Sonido\Efectos de sonido\explosion2.xnb
+C:\Users\carlo\OneDrive\Desktop\Monogame\Space Invadernt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Sonido\Efectos de sonido\explosion3.xnb
+C:\Users\carlo\OneDrive\Desktop\Monogame\Space Invadernt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Sonido\Efectos de sonido\herido1.xnb
+C:\Users\carlo\OneDrive\Desktop\Monogame\Space Invadernt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Sonido\Efectos de sonido\muerte1.xnb
+C:\Users\carlo\OneDrive\Desktop\Monogame\Space Invadernt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Sonido\Efectos de sonido\muerte2.xnb
+C:\Users\carlo\OneDrive\Desktop\Monogame\Space Invadernt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Sonido\Efectos de sonido\muerte3.xnb
+C:\Users\carlo\OneDrive\Desktop\Monogame\Space Invadernt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Sonido\Efectos de sonido\muerte4.xnb
+C:\Users\carlo\OneDrive\Desktop\Monogame\Space Invadernt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Sonido\Canciones\musica_fondo1.ogg
+C:\Users\carlo\OneDrive\Desktop\Monogame\Space Invadernt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Sonido\Canciones\musica_fondo1.xnb
+C:\Users\carlo\OneDrive\Desktop\Monogame\Space Invadernt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Sonido\Canciones\musica_fondo2.ogg
+C:\Users\carlo\OneDrive\Desktop\Monogame\Space Invadernt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Sonido\Canciones\musica_fondo2.xnb

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <SourceFile>c:/Users/carlo/OneDrive/Desktop/Monogame/Space Invadernt/Space_Invadesnt/Space_Invadesnt/Content/Sonido/Canciones/musica_fondo1.mp3</SourceFile>
+  <SourceTime>2025-04-16T19:22:05.6795571-06:00</SourceTime>
+  <DestFile>c:/Users/carlo/OneDrive/Desktop/Monogame/Space Invadernt/Space_Invadesnt/Space_Invadesnt/Content/bin/DesktopGL/Sonido/Canciones/musica_fondo1.xnb</DestFile>
+  <DestTime>2025-04-19T18:50:09.6660662-06:00</DestTime>
+  <Importer>Mp3Importer</Importer>
+  <ImporterTime>2024-08-16T11:05:56-06:00</ImporterTime>
+  <Processor>SongProcessor</Processor>
+  <ProcessorTime>2024-08-16T11:05:56-06:00</ProcessorTime>
+  <Parameters>
+    <Key>Quality</Key>
+    <Value>Best</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput>
+    <string>c:/Users/carlo/OneDrive/Desktop/Monogame/Space Invadernt/Space_Invadesnt/Space_Invadesnt/Content/bin/DesktopGL/Sonido/Canciones/musica_fondo1.ogg</string>
+  </BuildOutput>
+</PipelineBuildEvent>
