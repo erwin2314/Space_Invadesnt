@@ -36,6 +36,8 @@ public class Space_Invadesnt : Game
     public List<Entidad> balas;
     public int veces_muerto;
     public Reproductor_de_sonido reproductor_De_Sonido;
+    Poligonos poligono;
+    public Texture2D pixel;
     public Space_Invadesnt()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -49,6 +51,10 @@ public class Space_Invadesnt : Game
 
     protected override void Initialize()
     {
+        pixel = new Texture2D(GraphicsDevice, 1, 1);
+        pixel.SetData(new[] { Color.White });
+        poligono = new Poligonos();
+
         temporizador = 0;
         jugador = new Entidad(new Vector2(124,124), Content.Load<Texture2D>("Imagenes/Jugador/nave_ncpu"), offset_angulo: Convert.ToSingle(Math.PI/2), fuerza_de_aceleracion: 0.1f, es_jugador: true, vida_actual: 1, imagen_de_colision: Content.Load<Texture2D>("Imagenes/PlaceHolder/cuadrado_blanco"), multiplicador: 0.5f);
         enemigo = new Entidad(imagen: Content.Load<Texture2D>("Imagenes/Enemigos/asteroide"), velocidad: new Vector2(0,1), ID: 1, imagen_de_colision: Content.Load<Texture2D>("Imagenes/PlaceHolder/cuadrado_blanco"), multiplicador: 0.6f, vida_actual: 1);
@@ -169,6 +175,8 @@ public class Space_Invadesnt : Game
 
         reproductor_De_Sonido.Update();
 
+        poligono.Rotar(posicion_mouse, poligono.CalcularCentroide());
+
         base.Update(gameTime);
     }
 
@@ -182,6 +190,7 @@ public class Space_Invadesnt : Game
         creador_De_Entidades.Draw(_spriteBatch);
         creador_De_Entidades2.Draw(_spriteBatch);
         creador_De_Entidades3.Draw(_spriteBatch);
+        poligono.Draw(_spriteBatch,pixel);
         foreach (Entidad item in balas)
         {
             item.Draw(_spriteBatch);
