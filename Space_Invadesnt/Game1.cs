@@ -166,7 +166,6 @@ public class Space_Invadesnt : Game
             creador_De_Entidades.tiempo_entre_apariciones = creador_De_Entidades.tiempo_entre_apariciones - 0.15f;
             creador_De_Entidades2.tiempo_entre_apariciones = creador_De_Entidades2.tiempo_entre_apariciones - 0.15f;
             creador_De_Entidades3.tiempo_entre_apariciones = creador_De_Entidades3.tiempo_entre_apariciones - 0.15f;
-            Console.WriteLine(creador_De_Entidades.tiempo_entre_apariciones);
         }
         else
         {
