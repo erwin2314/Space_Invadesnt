@@ -6,46 +6,80 @@ using Microsoft.Xna.Framework.Graphics;
 public class Poligonos
 {
     public List<Vector2> vertices;
+    public Vector2 posicionDeOrigen;
+    public List<Vector2> verticesOriginales;
     public float angulo;
-
+    public float multiplicadorDeTamanoX;
+    public float multiplicadorDeTamanoY;
     //Constructores--------------------------------------------------------------
     public Poligonos
     (
-        List<Vector2> vertices = null,
-        float angulo = 0
+        List<Vector2> verticesOriginales = null,
+        float angulo = 0,
+        float multiplicadorDeTamanoX = 1,
+        float multiplicadorDeTamanoY = 1,
+        Vector2 posicionDeOrigen = new Vector2()
+
     )
     {
-
         this.angulo = angulo;
+        this.multiplicadorDeTamanoX = multiplicadorDeTamanoX;
+        this.multiplicadorDeTamanoY = multiplicadorDeTamanoY;
+        this.posicionDeOrigen = posicionDeOrigen;
+        this.vertices = new List<Vector2>();
 
-        if (vertices == null)
+        if (verticesOriginales == null)
         {
             List<Vector2> vector2s = new List<Vector2>()
             {
-                new Vector2(0,0),
-                new Vector2(64,0),
-                new Vector2(64,64),
-                new Vector2(0,64)
+                new Vector2(0, 0),
+                new Vector2(64, 0),
+                new Vector2(64, 64),
+                new Vector2(0, 64)
                 
             };
             CambiarVertices(vector2s);
         }
         else
         {
-            CambiarVertices(vertices);
+            CambiarVertices(verticesOriginales);
         }
     }
     //Constructores--------------------------------------------------------------
 
     //Cambiar Vertices-----------------------------------------------------------
-    public void CambiarVertices(List<Vector2> vector2s)
+    public void CambiarVertices(List<Vector2> nuevosVertices) // todos los verices que entren deben iniciar con respecto al origen del plano carteciano
     {
-        this.vertices =  vector2s;
+        verticesOriginales = nuevosVertices;
+        List<Vector2> vertices_temporales = new List<Vector2>();
+        Vector2 escala = new Vector2(multiplicadorDeTamanoX, multiplicadorDeTamanoY);
+        
+        for(int i = 0; i < nuevosVertices.Count; i++)
+        {
+
+            vertices_temporales.Add((nuevosVertices[i] * escala) + posicionDeOrigen);
+        }
+
+        this.vertices = Rotar(CalcularCentroide(), vertices_temporales);
+    }
+    public void CambiarVertices() // todos los verices que entren deben iniciar con respecto al origen del plano carteciano
+    {
+        List<Vector2> vertices_temporales = new List<Vector2>();
+        Vector2 escala = new Vector2(multiplicadorDeTamanoX, multiplicadorDeTamanoY);
+        for(int i = 0; i < verticesOriginales.Count; i++)
+        {
+            vertices_temporales.Add((verticesOriginales[i] * escala) + posicionDeOrigen);
+        }
+        this.vertices = Rotar(CalcularCentroide(), vertices_temporales);
     }
     //Cambiar Vertices-----------------------------------------------------------
 
+    //Actualizar Vertices--------------------------------------------------------
+
+    //Actualizar Vertices--------------------------------------------------------
+
     //Rotaciones-----------------------------------------------------------------
-    public void Rotar(float anguloRadianes, Vector2 puntoDeOrigen)
+    public void Rotar(float anguloRadianes, Vector2 puntoDeRotacion)
     {
         float cos = (float)Math.Cos(anguloRadianes);
         float sin = (float)Math.Sin(anguloRadianes);
@@ -56,26 +90,52 @@ public class Poligonos
         {
             Vector2 v = vertices[i];
 
-            float dx = v.X - puntoDeOrigen.X;
-            float dy = v.Y - puntoDeOrigen.Y;
+            float dx = v.X - puntoDeRotacion.X;
+            float dy = v.Y - puntoDeRotacion.Y;
 
             float xNuevo = dx * cos - dy * sin;
             float yNuevo = dx * sin + dy * cos;
 
-            xNuevo += puntoDeOrigen.X;
-            yNuevo += puntoDeOrigen.Y;
+            xNuevo += puntoDeRotacion.X;
+            yNuevo += puntoDeRotacion.Y;
 
             vertices[i] = new Vector2(xNuevo, yNuevo); 
         }
     }
+    public List<Vector2> Rotar(Vector2 puntoDeRotacion, List<Vector2> vectoresARotar)
+    {
+        float cos = (float)Math.Cos(angulo);
+        float sin = (float)Math.Sin(angulo);
 
-    public void Rotar(Vector2 puntoAMirar, Vector2 puntoDeOrigen)
+        List<Vector2> verticesTemporales = vectoresARotar;
+
+        //angulo = angulo; el angulo se queda igual, este metodo solo se deberia utilizar en el metodo cambiar matrices para devolverles su rotacion
+        
+        for(int i = 0; i < verticesTemporales.Count; i++ )
+        {
+            Vector2 v = verticesTemporales[i];
+
+            float dx = v.X - puntoDeRotacion.X;
+            float dy = v.Y - puntoDeRotacion.Y;
+
+            float xNuevo = dx * cos - dy * sin;
+            float yNuevo = dx * sin + dy * cos;
+
+            xNuevo += puntoDeRotacion.X;
+            yNuevo += puntoDeRotacion.Y;
+
+            verticesTemporales[i] = new Vector2(xNuevo, yNuevo); 
+        }
+        return verticesTemporales;
+    }
+
+    public void Rotar(Vector2 puntoAMirar, Vector2 puntoDeRotacion)
     {
         float anguloRadianes;
         float anguloAGirar;
         
-        float pmx = puntoAMirar.X - puntoDeOrigen.X;
-        float pmy = puntoAMirar.Y - puntoDeOrigen.Y;
+        float pmx = puntoAMirar.X - puntoDeRotacion.X;
+        float pmy = puntoAMirar.Y - puntoDeRotacion.Y;
 
         anguloRadianes = MathF.Atan2(pmy, pmx);
 
@@ -91,14 +151,14 @@ public class Poligonos
         {
             Vector2 v = vertices[i];
 
-            float dx = v.X - puntoDeOrigen.X;
-            float dy = v.Y - puntoDeOrigen.Y;
+            float dx = v.X - puntoDeRotacion.X;
+            float dy = v.Y - puntoDeRotacion.Y;
 
             float xNuevo = dx * cos - dy * sin;
             float yNuevo = dx * sin + dy * cos;
 
-            xNuevo = xNuevo + puntoDeOrigen.X;
-            yNuevo = yNuevo + puntoDeOrigen.Y;
+            xNuevo = xNuevo + puntoDeRotacion.X;
+            yNuevo = yNuevo + puntoDeRotacion.Y;
 
             vertices[i] = new Vector2(xNuevo, yNuevo); 
         }

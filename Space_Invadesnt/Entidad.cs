@@ -9,7 +9,6 @@ public class Entidad
 {
     public int vida_maxima;
     public int vida_actual;
-    public bool esta_vivo;
     public bool activa;
     public Vector2 posicion;
     public Texture2D imagen;
@@ -19,16 +18,13 @@ public class Entidad
     public float angulo;
     public float velocidad_de_rotacion;
     private Rectangle rectangulo_de_imagen;
-    public Rectangle rectangulo_de_colision;
-    public Vector2 origen_de_imagen;
-    public Vector2 origen_de_colision;
+    public Vector2 origen_de_imagen;//centro de la imagen
+    public Vector2 origen_de_poligono_colision;//posicion en la que sa va a colocar el primer vertice del poligono
     public float fuerza_de_aceleracion;
     public float offset_angulo;
-    private bool es_jugador;
     public float tiempo_de_existencia;
     public int ID;
-    public Texture2D imagen_de_colision;
-    public float multiplicador;
+    public Poligonos poligono_de_colision;
 
     //---------Constructores----------------------------------------
     public Entidad
@@ -40,31 +36,26 @@ public class Entidad
         float velocidad_de_rotacion = 0,
         float offset_angulo = 0,
         float fuerza_de_aceleracion = 0,
-        bool es_jugador = false,
         bool activa = true,
         Vector2 velocidad = new Vector2(),
         Vector2 aceleracion = new Vector2(),
         float tiempo_de_existencia = 0f,
         int vida_maxima = 5,
         int vida_actual = 5,
-        bool esta_vivo = true,
         int ID = 0,
-        Texture2D imagen_de_colision = null,
-        float multiplicador = 1
+        float multiplicador_de_colision_x = 1,
+        float multiplicador_de_colision_y = 1,
+        Vector2 origen_de_poligono_colision = new Vector2()
     )
     {
         this.posicion = posicion;
         this.imagen = imagen;
         this.prioridad_de_dibujado = prioridad_de_dibujado;
-        this.es_jugador = es_jugador;
         this.activa = activa;
         this.tiempo_de_existencia = tiempo_de_existencia;
         this.vida_maxima = vida_maxima;
         this.vida_actual = vida_actual;
-        this.esta_vivo = esta_vivo;
         this.ID = ID;
-        this.imagen_de_colision = imagen_de_colision;
-        this.multiplicador = multiplicador;
 
         this.velocidad = velocidad;
         this.aceleracion = aceleracion;
@@ -75,27 +66,36 @@ public class Entidad
         this.offset_angulo = offset_angulo;
         this.angulo = angulo + offset_angulo;
 
+        if(origen_de_poligono_colision == Vector2.Zero)
+        {
+            this.origen_de_poligono_colision = posicion;
+        }
+        else
+        {
+            this.origen_de_poligono_colision = origen_de_poligono_colision;
+        }
+        this.poligono_de_colision = new Poligonos();
+        poligono_de_colision.posicionDeOrigen = this.origen_de_poligono_colision;
+        poligono_de_colision.multiplicadorDeTamanoX = multiplicador_de_colision_x;
+        poligono_de_colision.multiplicadorDeTamanoY = multiplicador_de_colision_y;
+        poligono_de_colision.CambiarVertices();
+
         if (this.imagen == null)
         {
             this.rectangulo_de_imagen = new Rectangle();
-            this.rectangulo_de_colision = new Rectangle();
         }
         else
         {
             CambiarRectangulo_de_imagen();
-            CambiarRectangulo_de_colision(multiplicador);
         }
 
         if (this.imagen == null)
         {
             this.origen_de_imagen = new Vector2(0,0);
-            this.origen_de_colision = new Vector2(0,0);
         }
         else
         {
             this.origen_de_imagen = new Vector2(imagen.Width/2,imagen.Height/2);
-            this.origen_de_colision = new Vector2(imagen.Width/2,imagen.Height/2);
-
         }
         
     }
@@ -145,34 +145,16 @@ public class Entidad
     }
     //------CambiarRectangulo_de_imagen---------------------
 
-
-    //------CambiarRectangulo_de_colision---------------------
-    public void CambiarRectangulo_de_colision(float multiplicador)
-    {
-        rectangulo_de_colision.Width = Convert.ToInt32(imagen.Width * multiplicador);
-        rectangulo_de_colision.Height = Convert.ToInt32(imagen.Height * multiplicador);
-    }
-    public void CambiarRectangulo_de_colision(Rectangle rectangle)
-    {
-        rectangulo_de_colision = rectangle;
-    }
-    public void CambiarRectangulo_de_colision(int x, int y, int ancho, int alto)
-    {
-        rectangulo_de_colision = new Rectangle(x,y,ancho,alto);
-    }
-    //------CambiarRectangulo_de_colision---------------------
-
-
-    //------CambiarOrigenDeColision---------------------
+    //------Cambiar origen_de_poligono_colision---------------------
     public void CambiarOrigenDeColision(Vector2 vector2)
     {
-        origen_de_colision = vector2;
+        origen_de_poligono_colision = vector2;
     }
     public void CambiarOrigenDeColision(float x, float y)
     {
-        origen_de_colision = new Vector2(x, y);
+        origen_de_poligono_colision = new Vector2(x, y);
     }
-    //------CambiarOrigenDeImagen---------------------
+    //------Cambiar origen_de_poligono_colision---------------------
 
 
     //------Rotacion y Distancia----------------------
@@ -195,21 +177,12 @@ public class Entidad
         float distancia_final = Convert.ToSingle(distancia);
         return distancia_final;
     }
-
     public void MirarAUnPunto(Vector2 punto)
     {
         Vector2 punto_a_mirar = DistanciaRelativa(punto);
         angulo = MathF.Atan2(punto_a_mirar.Y, punto_a_mirar.X);
         angulo = angulo + offset_angulo;
     }
-    public float MirarAUnPunto(Vector2 punto, bool soobrecarga_extra)
-    {
-        Vector2 punto_a_mirar = DistanciaRelativa(punto);
-        angulo = AnguloDeVector(punto_a_mirar);
-        angulo = angulo + offset_angulo;
-        return angulo;
-    }
-
     public Vector2 DireccionRelativa(Vector2 punto)
     {
         Vector2 direccion = DistanciaRelativa(punto);
@@ -277,12 +250,9 @@ public class Entidad
     //------Movimiento--------------------------------
 
     //------Colisiones--------------------------------
-    public void ActualizarRectaguloDeColision()
+    public void ActualizarPoligonoDeColision()
     {
-        rectangulo_de_colision.X = Convert.ToInt32(posicion.X - origen_de_colision.X);
-        rectangulo_de_colision.Y = Convert.ToInt32(posicion.Y - origen_de_colision.Y);
-        rectangulo_de_colision.Width = Convert.ToInt32(imagen.Width * multiplicador);
-        rectangulo_de_colision.Height = Convert.ToInt32(imagen.Height * multiplicador);
+        
     }
 
     public bool EstaColisionando(List<Entidad> lista_entidades, out List<Entidad> lista_entidades_colisionando)
