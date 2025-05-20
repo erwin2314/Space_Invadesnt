@@ -53,12 +53,12 @@ public class Creador_de_entidades
     }
     //-------Constructores----------------------------------------------------------
 
-    public void Draw(SpriteBatch spriteBatch)
+    public void Draw(SpriteBatch spriteBatch, Texture2D pixel)
     {
         foreach (Entidad e in lista_entidades)
         {
             e.Draw(spriteBatch);
-            //e.DrawColision(spriteBatch);
+            e.DrawColision(spriteBatch, pixel);
         }
     }
     
@@ -71,13 +71,14 @@ public class Creador_de_entidades
         if (tiempo_transcurrido >= tiempo_entre_apariciones)
         {
             Entidad entidad_nueva = entidad_base.Clonar();
-            entidad_nueva.posicion = new Vector2(random.Next(rectangulo_de_aparicion.X,rectangulo_de_aparicion.Right),random.Next(rectangulo_de_aparicion.Y,rectangulo_de_aparicion.Bottom));
+            entidad_nueva.posicion = new Vector2(random.Next(rectangulo_de_aparicion.X, rectangulo_de_aparicion.Right), random.Next(rectangulo_de_aparicion.Y, rectangulo_de_aparicion.Bottom));
+            entidad_nueva.RecolocarPoligonoDeColison();
             lista_entidades.Add(entidad_nueva);
             tiempo_transcurrido = 0f;
         }
 
         lista_entidades.RemoveAll(e => e.tiempo_de_existencia >= tiempo_maximo_de_existencia_de_entidad);
-        lista_entidades.RemoveAll(e => e.esta_vivo == false);
+        lista_entidades.RemoveAll(e => e.vida_actual <= 0 == true);
         foreach (Entidad item in lista_entidades)
         {
             
@@ -103,12 +104,13 @@ public class Creador_de_entidades
         {
             Entidad entidad_nueva = entidad_base.Clonar();
             entidad_nueva.posicion = new Vector2(random.Next(rectangulo_de_aparicion.X,rectangulo_de_aparicion.Right),random.Next(rectangulo_de_aparicion.Y,rectangulo_de_aparicion.Bottom));
+            entidad_nueva.RecolocarPoligonoDeColison();
             lista_entidades.Add(entidad_nueva);
             tiempo_transcurrido = 0f;
         }
 
         lista_entidades.RemoveAll(e => e.tiempo_de_existencia >= tiempo_maximo_de_existencia_de_entidad);
-        lista_entidades.RemoveAll(e => e.esta_vivo == false);
+        lista_entidades.RemoveAll(e => e.vida_actual <= 0 == true);
         foreach (Entidad item in lista_entidades)
         {
             item.Update(punto, gameTime);
@@ -123,12 +125,13 @@ public class Creador_de_entidades
         {
             Entidad entidad_nueva = entidad_base.Clonar();
             entidad_nueva.posicion = new Vector2(random.Next(rectangulo_de_aparicion.X,rectangulo_de_aparicion.Right),random.Next(rectangulo_de_aparicion.Y,rectangulo_de_aparicion.Bottom));
+            entidad_nueva.RecolocarPoligonoDeColison();
             lista_entidades.Add(entidad_nueva);
             tiempo_transcurrido = 0f;
         }
 
         lista_entidades.RemoveAll(e => e.tiempo_de_existencia >= tiempo_maximo_de_existencia_de_entidad);
-        lista_entidades.RemoveAll(e => e.esta_vivo == false);
+        lista_entidades.RemoveAll(e => e.vida_actual <= 0 == true);
         foreach (Entidad item in lista_entidades)
         {
 

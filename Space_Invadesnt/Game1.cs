@@ -36,7 +36,6 @@ public class Space_Invadesnt : Game
     public List<Entidad> balas;
     public int veces_muerto;
     public Reproductor_de_sonido reproductor_De_Sonido;
-    Poligonos poligono;
     public Texture2D pixel;
     public Space_Invadesnt()
     {
@@ -53,12 +52,11 @@ public class Space_Invadesnt : Game
     {
         pixel = new Texture2D(GraphicsDevice, 1, 1);
         pixel.SetData(new[] { Color.White });
-        poligono = new Poligonos();
 
         temporizador = 0;
-        jugador = new Entidad(new Vector2(124,124), Content.Load<Texture2D>("Imagenes/Jugador/nave_ncpu"), offset_angulo: Convert.ToSingle(Math.PI/2), fuerza_de_aceleracion: 0.1f, es_jugador: true, vida_actual: 1, imagen_de_colision: Content.Load<Texture2D>("Imagenes/PlaceHolder/cuadrado_blanco"), multiplicador: 0.5f);
-        enemigo = new Entidad(imagen: Content.Load<Texture2D>("Imagenes/Enemigos/asteroide"), velocidad: new Vector2(0,1), ID: 1, imagen_de_colision: Content.Load<Texture2D>("Imagenes/PlaceHolder/cuadrado_blanco"), multiplicador: 0.6f, vida_actual: 1);
-        disparo = new Entidad(new Vector2(100,100), Content.Load<Texture2D>("Imagenes/Balas/disparo1"), imagen_de_colision: Content.Load<Texture2D>("Imagenes/PlaceHolder/cuadrado_blanco"), multiplicador: 0.5f, vida_actual: 1, velocidad: new Vector2(20,20));
+        jugador = new Entidad(new Vector2(0,0), Content.Load<Texture2D>("Imagenes/Jugador/nave_ncpu"), offset_angulo: Convert.ToSingle(Math.PI/2), fuerza_de_aceleracion: 0.1f, vida_actual: 1, multiplicador_de_colision_x: 0.4f, multiplicador_de_colision_y: 0.8f);
+        enemigo = new Entidad(imagen: Content.Load<Texture2D>("Imagenes/Enemigos/asteroide"), velocidad: new Vector2(0,1), ID: 1, vida_actual: 1, multiplicador_de_colision_x: 0.9f, multiplicador_de_colision_y: 0.9f);
+        disparo = new Entidad(new Vector2(100,100), Content.Load<Texture2D>("Imagenes/Balas/disparo1"), vida_actual: 1, velocidad: new Vector2(20,20), multiplicador_de_colision_x: 0.5f, multiplicador_de_colision_y: 0.5f);
         balas = new List<Entidad>();
 
         veces_muerto = 0;
@@ -99,7 +97,7 @@ public class Space_Invadesnt : Game
         
 
         mouseState = Mouse.GetState();
-        if ((mouseState.LeftButton == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Space)) & temporizador2 > 1 & jugador.esta_vivo )
+        if ((mouseState.LeftButton == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Space)) & temporizador2 > 1 & jugador.vida_actual > 0)
         {
             balas.Add(jugador.DispararEntidad(disparo, posicion_mouse, jugador));
             temporizador2 = 0;
@@ -115,45 +113,49 @@ public class Space_Invadesnt : Game
         creador_De_Entidades.Update(gameTime, new Vector2(-100,0), true);
         creador_De_Entidades2.Update(gameTime, new Vector2(0,820), false);
         creador_De_Entidades3.Update(gameTime, new Vector2(0,-100), false);
-        
 
-        if(jugador.vida_actual > 0)
+
+        if (jugador.vida_actual > 0)
         {
             puntuacion = puntuacion + gameTime.ElapsedGameTime.TotalSeconds;
             jugador.MirarAUnPunto(posicion_mouse);
-            jugador.Update(keyboardState, gameTime);  
+            jugador.poligono_de_colision.Rotar(posicion_mouse, jugador.poligono_de_colision.CalcularCentroide());
+            jugador.Update(keyboardState, gameTime);
 
-            if(jugador.EstaColisionando(creador_De_Entidades.lista_entidades) || jugador.EstaColisionando(creador_De_Entidades2.lista_entidades) || jugador.EstaColisionando(creador_De_Entidades3.lista_entidades))
-            {   
+            if (jugador.EstaColisionando(creador_De_Entidades.lista_entidades) || jugador.EstaColisionando(creador_De_Entidades2.lista_entidades) || jugador.EstaColisionando(creador_De_Entidades3.lista_entidades))
+            {
                 jugador.RecibirDaño(1);
             }
-            
+
         }
-        else if(veces_muerto == 0)
+        else if (veces_muerto == 0)
         {
             reproductor_De_Sonido.ReproducirEfectoDeSonido("explosion");
             reproductor_De_Sonido.ReproducirEfectoDeSonido("muerte");
             veces_muerto = 1;
         }
 
-        balas.RemoveAll(e => e.esta_vivo == false);
+        balas.RemoveAll(e => e.vida_actual <= 0 == true);
         foreach (Entidad item in balas)
         {
             item.Update(gameTime);
             if (item.EstaColisionando(creador_De_Entidades.lista_entidades, out Entidad entidad))
             {
+                Console.WriteLine("true");
                 entidad.RecibirDaño(10);
                 item.RecibirDaño(10);
                 reproductor_De_Sonido.ReproducirEfectoDeSonido("explosion");
             }
             else if (item.EstaColisionando(creador_De_Entidades2.lista_entidades, out Entidad entidad2))
             {
+                Console.WriteLine("true");
                 entidad2.RecibirDaño(10);
                 item.RecibirDaño(10);
                 reproductor_De_Sonido.ReproducirEfectoDeSonido("explosion");
             }
             else if (item.EstaColisionando(creador_De_Entidades3.lista_entidades, out Entidad entidad3))
             {
+                Console.WriteLine("true");
                 entidad3.RecibirDaño(10);
                 item.RecibirDaño(10);
                 reproductor_De_Sonido.ReproducirEfectoDeSonido("explosion");
@@ -174,8 +176,6 @@ public class Space_Invadesnt : Game
 
         reproductor_De_Sonido.Update();
 
-        poligono.Rotar(posicion_mouse, poligono.CalcularCentroide());
-
         base.Update(gameTime);
     }
 
@@ -186,20 +186,20 @@ public class Space_Invadesnt : Game
         _spriteBatch.Draw(fondo,new Rectangle(0,0,1280,720),Color.White);
         _spriteBatch.DrawString(arial, Convert.ToString(Convert.ToInt32(puntuacion)),new Vector2(0,0),Color.White);
         _spriteBatch.End();
-        creador_De_Entidades.Draw(_spriteBatch);
-        creador_De_Entidades2.Draw(_spriteBatch);
-        creador_De_Entidades3.Draw(_spriteBatch);
-        poligono.Draw(_spriteBatch,pixel);
+        creador_De_Entidades.Draw(_spriteBatch, pixel);
+        creador_De_Entidades2.Draw(_spriteBatch, pixel);
+        creador_De_Entidades3.Draw(_spriteBatch, pixel);
         foreach (Entidad item in balas)
         {
             item.Draw(_spriteBatch);
+            item.DrawColision(_spriteBatch, pixel);
         }
 
 
         if(jugador.vida_actual > 0)
         {
             jugador.Draw(_spriteBatch);
-            //jugador.DrawColision(_spriteBatch);
+            jugador.DrawColision(_spriteBatch, pixel);
         }
         base.Draw(gameTime);
     }

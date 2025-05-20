@@ -7,18 +7,19 @@ public class Poligonos
 {
     public List<Vector2> vertices;
     public Vector2 posicionDeOrigen;
-    public List<Vector2> verticesOriginales;
     public float angulo;
     public float multiplicadorDeTamanoX;
     public float multiplicadorDeTamanoY;
     //Constructores--------------------------------------------------------------
     public Poligonos
     (
-        List<Vector2> verticesOriginales = null,
+        List<Vector2> vertices = null,
         float angulo = 0,
         float multiplicadorDeTamanoX = 1,
         float multiplicadorDeTamanoY = 1,
-        Vector2 posicionDeOrigen = new Vector2()
+        Vector2 posicionDeOrigen = new Vector2(),
+        bool colocarSegunCentroide = false,
+        Vector2 centroide = new Vector2()
 
     )
     {
@@ -28,7 +29,7 @@ public class Poligonos
         this.posicionDeOrigen = posicionDeOrigen;
         this.vertices = new List<Vector2>();
 
-        if (verticesOriginales == null)
+        if (vertices == null)
         {
             List<Vector2> vector2s = new List<Vector2>()
             {
@@ -36,57 +37,98 @@ public class Poligonos
                 new Vector2(64, 0),
                 new Vector2(64, 64),
                 new Vector2(0, 64)
-                
+
             };
-            CambiarVertices(vector2s);
+            ColocarVertices(vector2s, colocarSegunCentroide, centroide);
         }
         else
         {
-            CambiarVertices(verticesOriginales);
+            ColocarVertices(vertices, colocarSegunCentroide, centroide);
         }
+
+    }
+    public Poligonos Clonar(Poligonos poligonoAClonar)
+    {
+        // Crear una nueva lista con copias de los Vector2
+        List<Vector2> copiaDeVertices = new List<Vector2>();
+
+        foreach (Vector2 item in poligonoAClonar.vertices)
+        {
+            copiaDeVertices.Add(new Vector2(item.X, item.Y));
+        }
+
+        Poligonos poligono_a_regresar = new Poligonos(
+            vertices: copiaDeVertices,
+            angulo: poligonoAClonar.angulo,
+            multiplicadorDeTamanoX: poligonoAClonar.multiplicadorDeTamanoX,
+            multiplicadorDeTamanoY: poligonoAClonar.multiplicadorDeTamanoY,
+            posicionDeOrigen: poligonoAClonar.posicionDeOrigen
+        );
+
+        return poligono_a_regresar;
     }
     //Constructores--------------------------------------------------------------
 
-    //Cambiar Vertices-----------------------------------------------------------
-    public void CambiarVertices(List<Vector2> nuevosVertices) // todos los verices que entren deben iniciar con respecto al origen del plano carteciano
+    //Colocar vertices al construir----------------------------------------------
+    public void ColocarVertices(List<Vector2> verticesAColocar, bool utilizaCentroide = false, Vector2 centroideAUtilizar = new Vector2())
     {
-        verticesOriginales = nuevosVertices;
-        List<Vector2> vertices_temporales = new List<Vector2>();
         Vector2 escala = new Vector2(multiplicadorDeTamanoX, multiplicadorDeTamanoY);
-        
-        for(int i = 0; i < nuevosVertices.Count; i++)
+        List<Vector2> verticesTemporales = new List<Vector2>();
+        Vector2 vectorTemporal = new Vector2();
+        if (utilizaCentroide == false)
         {
-
-            vertices_temporales.Add((nuevosVertices[i] * escala) + posicionDeOrigen);
+            foreach (Vector2 item in verticesAColocar)
+            {
+                vectorTemporal = (item * escala) + posicionDeOrigen;
+                verticesTemporales.Add(vectorTemporal);
+            }
+            this.vertices = verticesTemporales;
         }
-
-        this.vertices = Rotar(CalcularCentroide(), vertices_temporales);
-    }
-    public void CambiarVertices() // todos los verices que entren deben iniciar con respecto al origen del plano carteciano
-    {
-        List<Vector2> vertices_temporales = new List<Vector2>();
-        Vector2 escala = new Vector2(multiplicadorDeTamanoX, multiplicadorDeTamanoY);
-        for(int i = 0; i < verticesOriginales.Count; i++)
+        else
         {
-            vertices_temporales.Add((verticesOriginales[i] * escala) + posicionDeOrigen);
+            foreach (Vector2 item in verticesAColocar)
+            {
+                verticesTemporales.Add(item * escala);
+            }
+
+            Vector2 centroideTemporal = CalcularCentroide(verticesTemporales);
+            Vector2 desplazamiento = (posicionDeOrigen + centroideAUtilizar) - centroideTemporal;
+
+            for (int i = 0; i < verticesTemporales.Count; i++)
+            {
+                verticesTemporales[i] = verticesTemporales[i] + desplazamiento;
+            }
+
+            this.vertices = verticesTemporales;
         }
-        this.vertices = Rotar(CalcularCentroide(), vertices_temporales);
     }
-    //Cambiar Vertices-----------------------------------------------------------
+    //Colocar vertices al construir----------------------------------------------
 
     //Actualizar Vertices--------------------------------------------------------
-
+    public void ActualizarVertices(float anguloASeguir, Vector2 velocidad)
+    {
+        List<Vector2> verticesTemporales = new List<Vector2>();
+        foreach (Vector2 item in vertices)
+        {
+            verticesTemporales.Add(item + velocidad);
+        }
+        vertices = verticesTemporales;
+        Rotar(anguloASeguir, CalcularCentroide());
+    }
     //Actualizar Vertices--------------------------------------------------------
 
     //Rotaciones-----------------------------------------------------------------
     public void Rotar(float anguloRadianes, Vector2 puntoDeRotacion)
     {
-        float cos = (float)Math.Cos(anguloRadianes);
-        float sin = (float)Math.Sin(anguloRadianes);
 
-        angulo = angulo + anguloRadianes;
-        
-        for(int i = 0; i < vertices.Count; i++ )
+        float anguloAGirar = Convert.ToSingle(Math.Atan2(Math.Sin(anguloRadianes - angulo), Math.Cos(anguloRadianes - angulo)));
+
+        float cos = (float)Math.Cos(anguloAGirar);
+        float sin = (float)Math.Sin(anguloAGirar);
+
+        angulo = angulo + anguloAGirar;
+
+        for (int i = 0; i < vertices.Count; i++)
         {
             Vector2 v = vertices[i];
 
@@ -99,7 +141,7 @@ public class Poligonos
             xNuevo += puntoDeRotacion.X;
             yNuevo += puntoDeRotacion.Y;
 
-            vertices[i] = new Vector2(xNuevo, yNuevo); 
+            vertices[i] = new Vector2(xNuevo, yNuevo);
         }
     }
     public List<Vector2> Rotar(Vector2 puntoDeRotacion, List<Vector2> vectoresARotar)
@@ -175,7 +217,7 @@ public class Poligonos
             sumaX = sumaX + item.X;
             sumaY = sumaY + item.Y;
         }
-        return new Vector2(sumaX/vertices.Count,sumaY/vertices.Count);
+        return new Vector2(sumaX / vertices.Count, sumaY / vertices.Count);
     }
     public Vector2 CalcularCentroide(Poligonos poligono)
     {
@@ -187,6 +229,17 @@ public class Poligonos
             sumaY = sumaY + item.Y;
         }
         return new Vector2(sumaX/poligono.vertices.Count, sumaY/poligono.vertices.Count);
+    }
+    public Vector2 CalcularCentroide(List<Vector2> _vertices)
+    {
+        float sumaX = 0;
+        float sumaY = 0;
+        foreach (Vector2 item in _vertices)
+        {
+            sumaX = sumaX + item.X;
+            sumaY = sumaY + item.Y;
+        }
+        return new Vector2(sumaX/_vertices.Count, sumaY/_vertices.Count);
     }
     public int DistanciaEntreCentroidesInt(Vector2 centroide)
     {
