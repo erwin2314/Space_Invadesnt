@@ -284,19 +284,8 @@ public class Entidad
     {
         this.poligono_de_colision.ColocarVertices(poligono_de_colision.vertices, true, posicion);
     }
-    public void RecolocarPoligonoDeColison(List<Vector2> verticesARecolocar)
-    {
-        poligono_de_colision.ColocarVertices(verticesARecolocar, true, posicion);
-    }
-    public void RecolocarPoligonoDeColison(List<Vector2> verticesARecolocar, Vector2 centroideARecolocar)
-    {
-        poligono_de_colision.ColocarVertices(verticesARecolocar, true, centroideARecolocar);
-    }
-    public void RecolocarPoligonoDeColison(Vector2 centroideARecolocar)
-    {
-        poligono_de_colision.ColocarVertices(poligono_de_colision.vertices, true, centroideARecolocar);
-    }
-    public void ActualizarPoligonoDeColision(Vector2 vector2)
+
+    public void ActualizarPoligonoDeColision()
     {
         poligono_de_colision.ActualizarVertices(angulo, velocidad);
     }
@@ -306,13 +295,13 @@ public class Entidad
         lista_entidades_colisionando = new List<Entidad>();
         foreach (Entidad item in lista_entidades)
         {
-            if(poligono_de_colision.EstaColisionandoCon(item.poligono_de_colision, distancia_minima))
+            if (poligono_de_colision.EstaColisionandoCon(item.poligono_de_colision, distancia_minima))
             {
                 lista_entidades_colisionando.Add(item);
             }
-            
+
         }
-        if(lista_entidades_colisionando.Count > 0)
+        if (lista_entidades_colisionando.Count > 0)
         {
             return true;
         }
@@ -379,24 +368,39 @@ public class Entidad
             return false;
         }
     }
+    
+    public bool EstaColisionandoMtv(Entidad otra_entidad, out Vector2 _mtv, int distancia_minima = 100)
+    {
+        if(poligono_de_colision.EstaColisionandoConMtv(otra_entidad.poligono_de_colision, distancia_minima, out Vector2 mtv))
+        {
+            _mtv = mtv;
+            return true;
+        }
+        else
+        {
+            _mtv = mtv;
+            return false;
+        }
+    }
     //------Colisiones y poligonos--------------------------------
 
     //------Updates-----------------------------------
     public void Update(KeyboardState teclado, GameTime gameTime, bool importaSiEstaVivo = true)
     {
-        if(importaSiEstaVivo == true && vida_actual <= 0)
+        if (importaSiEstaVivo == true && vida_actual <= 0)
         {
-            
+
         }
         else
         {
+
             MovimientoTeclas(teclado);
             angulo = angulo + velocidad_de_rotacion;
-            
 
             posicion = posicion + velocidad;
-            ActualizarPoligonoDeColision(posicion);
+            ActualizarPoligonoDeColision();
             tiempo_de_existencia = tiempo_de_existencia + Convert.ToSingle(gameTime.ElapsedGameTime.TotalSeconds);
+
         }
     }
     public void Update(GameTime gameTime, bool importaSiEstaVivo = true)
@@ -405,7 +409,7 @@ public class Entidad
         velocidad = velocidad + aceleracion;
         angulo = angulo + velocidad_de_rotacion;
         posicion = posicion + velocidad;
-        ActualizarPoligonoDeColision(posicion);
+        ActualizarPoligonoDeColision();
         tiempo_de_existencia = tiempo_de_existencia + Convert.ToSingle(gameTime.ElapsedGameTime.TotalSeconds);
 
     }
@@ -419,7 +423,7 @@ public class Entidad
             angulo = angulo + velocidad_de_rotacion;
             posicion = posicion + velocidad_de_destino;
         }
-        ActualizarPoligonoDeColision(posicion);
+        ActualizarPoligonoDeColision();
         tiempo_de_existencia = tiempo_de_existencia + Convert.ToSingle(gameTime.ElapsedGameTime.TotalSeconds);
 
     }

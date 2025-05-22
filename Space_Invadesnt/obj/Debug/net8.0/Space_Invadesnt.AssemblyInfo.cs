@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Space_Invadesnt")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+887852bddd13a5087c1ff43c10b3860237097e86")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3c9c4c5460756d4afbec03d7d4b842dfae4a3d64")]
 [assembly: System.Reflection.AssemblyProductAttribute("Space_Invadesnt")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Space_Invadesnt")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

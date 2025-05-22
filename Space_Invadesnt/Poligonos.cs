@@ -319,6 +319,65 @@ public class Poligonos
         //Superposición en todos los ejes: hay colisión
         return true;
     }
+
+    public bool SAT(Poligonos otro, out Vector2 mtv)
+    {
+        Vector2[] lados1 = new Vector2[vertices.Count];
+        Vector2[] lados2 = new Vector2[otro.vertices.Count];
+
+        for (int i = 0; i < lados1.Length; i++)
+            lados1[i] = vertices[(i + 1) % vertices.Count] - vertices[i];
+
+        for (int i = 0; i < lados2.Length; i++)
+            lados2[i] = otro.vertices[(i + 1) % otro.vertices.Count] - otro.vertices[i];
+
+        Vector2[] normales1 = new Vector2[lados1.Length];
+        Vector2[] normales2 = new Vector2[lados2.Length];
+
+        for (int i = 0; i < normales1.Length; i++)
+            normales1[i] = Vector2.Normalize(new Vector2(-lados1[i].Y, lados1[i].X));
+
+        for (int i = 0; i < normales2.Length; i++)
+            normales2[i] = Vector2.Normalize(new Vector2(-lados2[i].Y, lados2[i].X));
+
+        List<Vector2> ejes = new List<Vector2>();
+        ejes.AddRange(normales1);
+        ejes.AddRange(normales2);
+
+        float menorSolapamiento = float.MaxValue;
+        Vector2 mejorEje = Vector2.Zero;
+
+        foreach (Vector2 eje in ejes)
+        {
+            float minA, maxA, minB, maxB;
+
+            ProyectarVertices(vertices, eje, out minA, out maxA);
+            ProyectarVertices(otro.vertices, eje, out minB, out maxB);
+
+            if (maxA < minB || maxB < minA)
+            {
+                mtv = Vector2.Zero; // No colisión
+                return false;
+            }
+
+            float solapamiento = Math.Min(maxA, maxB) - Math.Max(minA, minB);
+            if (solapamiento < menorSolapamiento)
+            {
+                menorSolapamiento = solapamiento;
+                mejorEje = eje;
+            }
+        }
+
+        // Dirección del MTV: desde este polígono hacia el otro
+        Vector2 direccion = CalcularCentroide(otro) - CalcularCentroide();
+        if (Vector2.Dot(direccion, mejorEje) < 0)
+            mejorEje = -mejorEje;
+
+        mtv = mejorEje * menorSolapamiento;
+        return true;
+    }
+
+
         // Método auxiliar para proyectar vértices en un eje
     private void ProyectarVertices(List<Vector2> vertices, Vector2 eje, out float min, out float max)
     {
@@ -328,11 +387,11 @@ public class Poligonos
         {
             // Producto punto para la proyección
             float proyeccion = vertice.X * eje.X + vertice.Y * eje.Y;
-            if (proyeccion < min) 
+            if (proyeccion < min)
             {
                 min = proyeccion;
             }
-            if (proyeccion > max) 
+            if (proyeccion > max)
             {
                 max = proyeccion;
             }
@@ -352,14 +411,17 @@ public class Poligonos
             return false;
         }
     }
-    public bool EstaColisionandoCon(Poligonos otro, Vector2 distancia_minima_de_comprobacion)
+    public bool EstaColisionandoConMtv(Poligonos otro, int distancia_minima_de_comprobacion, out Vector2 _mtv)
     {
-        if(DistanciaEntreCentroidesVector(otro).Length() < distancia_minima_de_comprobacion.Length())
+        if (DistanciaEntreCentroidesInt(otro) < distancia_minima_de_comprobacion)
         {
-            return SAT(otro);
+            bool boolTemporal = SAT(otro, out Vector2 mtv);
+            _mtv = mtv;
+            return boolTemporal;
         }
         else
         {
+            _mtv = new Vector2();
             return false;
         }
     }
