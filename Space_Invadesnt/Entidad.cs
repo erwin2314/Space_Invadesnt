@@ -25,6 +25,7 @@ public class Entidad
     public float tiempo_de_existencia;
     public int ID;
     public Poligonos poligono_de_colision;
+    public float cantidadDeFriccion; // el rango va de 0 (se para de inmediato), a 1 (no se detiene nunca) o -1 (se invierte la direccion en la que se mueve?)
 
     //---------Constructores----------------------------------------
     public Entidad
@@ -45,7 +46,8 @@ public class Entidad
         int ID = 0,
         float multiplicador_de_colision_x = 1,
         float multiplicador_de_colision_y = 1,
-        Vector2 origen_de_poligono_colision = new Vector2()
+        Vector2 origen_de_poligono_colision = new Vector2(),
+        float cantidadDeFriccion = 1
     )
     {
         this.posicion = posicion;
@@ -56,17 +58,18 @@ public class Entidad
         this.vida_maxima = vida_maxima;
         this.vida_actual = vida_actual;
         this.ID = ID;
+        this.cantidadDeFriccion = cantidadDeFriccion;
 
         this.velocidad = velocidad;
         this.aceleracion = aceleracion;
         this.fuerza_de_aceleracion = fuerza_de_aceleracion;
 
-        
+
         this.velocidad_de_rotacion = velocidad_de_rotacion;
         this.offset_angulo = offset_angulo;
         this.angulo = angulo + offset_angulo;
 
-        if(origen_de_poligono_colision == Vector2.Zero)
+        if (origen_de_poligono_colision == Vector2.Zero)
         {
             this.origen_de_poligono_colision = posicion;
         }
@@ -77,8 +80,8 @@ public class Entidad
         this.poligono_de_colision = new Poligonos();
         poligono_de_colision.multiplicadorDeTamanoX = multiplicador_de_colision_x;
         poligono_de_colision.multiplicadorDeTamanoY = multiplicador_de_colision_y;
-        this.poligono_de_colision.ColocarVertices(poligono_de_colision.vertices, true, posicion);
-        
+        this.poligono_de_colision.ColocarVertices(poligono_de_colision.vertices, posicion);
+
 
         if (this.imagen == null)
         {
@@ -91,13 +94,13 @@ public class Entidad
 
         if (this.imagen == null)
         {
-            this.origen_de_imagen = new Vector2(0,0);
+            this.origen_de_imagen = new Vector2(0, 0);
         }
         else
         {
-            this.origen_de_imagen = new Vector2(imagen.Width/2,imagen.Height/2);
+            this.origen_de_imagen = new Vector2(imagen.Width / 2, imagen.Height / 2);
         }
-        
+
     }
 
     public Entidad Clonar()
@@ -119,7 +122,8 @@ public class Entidad
             tiempo_de_existencia: this.tiempo_de_existencia,
             ID: this.ID,
             multiplicador_de_colision_x: this.poligono_de_colision.multiplicadorDeTamanoX,
-            multiplicador_de_colision_y: this.poligono_de_colision.multiplicadorDeTamanoY
+            multiplicador_de_colision_y: this.poligono_de_colision.multiplicadorDeTamanoY,
+            cantidadDeFriccion: this.cantidadDeFriccion
         );
 
         entidad_a_regresar.poligono_de_colision = this.poligono_de_colision.Clonar(this.poligono_de_colision);
@@ -232,31 +236,35 @@ public class Entidad
     public void MovimientoTeclas(KeyboardState teclado)
     {
         teclado = Keyboard.GetState();
-        
 
         if (teclado.IsKeyDown(Keys.W))
         {
             aceleracion.Y = aceleracion.Y - fuerza_de_aceleracion;
-            velocidad = velocidad + aceleracion;
-            aceleracion = new Vector2(0,0);
+            velocidad = (velocidad + aceleracion) /** cantidadDeFriccion*/;
+            aceleracion = new Vector2(0, 0);
         }
         if (teclado.IsKeyDown(Keys.S))
         {
             aceleracion.Y = aceleracion.Y + fuerza_de_aceleracion;
-            velocidad = velocidad + aceleracion;
-            aceleracion = new Vector2(0,0);
+            velocidad = (velocidad + aceleracion) /** cantidadDeFriccion*/;
+            aceleracion = new Vector2(0, 0);
         }
         if (teclado.IsKeyDown(Keys.D))
         {
             aceleracion.X = aceleracion.X + fuerza_de_aceleracion;
-            velocidad = velocidad + aceleracion;
-            aceleracion = new Vector2(0,0);
+            velocidad = (velocidad + aceleracion) /** cantidadDeFriccion*/;
+            aceleracion = new Vector2(0, 0);
         }
         if (teclado.IsKeyDown(Keys.A))
         {
             aceleracion.X = aceleracion.X - fuerza_de_aceleracion;
-            velocidad = velocidad + aceleracion;
-            aceleracion = new Vector2(0,0);
+            velocidad = (velocidad + aceleracion) /** cantidadDeFriccion*/;
+            aceleracion = new Vector2(0, 0);
+        }
+
+        if (teclado.GetPressedKeys().Length == 0)
+        {
+            velocidad = (velocidad + aceleracion) * cantidadDeFriccion;
         }
     }
 
@@ -282,37 +290,31 @@ public class Entidad
     //------Colisiones y poligonos--------------------------------
     public void RecolocarPoligonoDeColison()
     {
-        this.poligono_de_colision.ColocarVertices(poligono_de_colision.vertices, true, posicion);
-    }
-    public void RecolocarPoligonoDeColison(List<Vector2> verticesARecolocar)
-    {
-        poligono_de_colision.ColocarVertices(verticesARecolocar, true, posicion);
-    }
-    public void RecolocarPoligonoDeColison(List<Vector2> verticesARecolocar, Vector2 centroideARecolocar)
-    {
-        poligono_de_colision.ColocarVertices(verticesARecolocar, true, centroideARecolocar);
-    }
-    public void RecolocarPoligonoDeColison(Vector2 centroideARecolocar)
-    {
-        poligono_de_colision.ColocarVertices(poligono_de_colision.vertices, true, centroideARecolocar);
-    }
-    public void ActualizarPoligonoDeColision(Vector2 vector2)
-    {
-        poligono_de_colision.ActualizarVertices(angulo, velocidad);
+        this.poligono_de_colision.ColocarVertices(poligono_de_colision.vertices, posicion);
     }
 
+    public void ActualizarPoligonoDeColisionVelocidad()
+    {
+        poligono_de_colision.ActualizarVerticesVelocidad(angulo, velocidad);
+    }
+    public void ActualizarPoligonoDeColisionPosicion()
+    {
+        poligono_de_colision.ActualizarVerticesPosicion(angulo, posicion);
+    }
+
+    //------colisiones sin logica esxtra (solo devuelven bools y algun vector o entidad)--------------------------
     public bool EstaColisionando(List<Entidad> lista_entidades, out List<Entidad> lista_entidades_colisionando, int distancia_minima = 100)
     {
         lista_entidades_colisionando = new List<Entidad>();
         foreach (Entidad item in lista_entidades)
         {
-            if(poligono_de_colision.EstaColisionandoCon(item.poligono_de_colision, distancia_minima))
+            if (poligono_de_colision.EstaColisionandoCon(item.poligono_de_colision, distancia_minima))
             {
                 lista_entidades_colisionando.Add(item);
             }
-            
+
         }
-        if(lista_entidades_colisionando.Count > 0)
+        if (lista_entidades_colisionando.Count > 0)
         {
             return true;
         }
@@ -379,24 +381,64 @@ public class Entidad
             return false;
         }
     }
-    //------Colisiones y poligonos--------------------------------
+    
+    public bool EstaColisionandoMtv(Entidad otra_entidad, out Vector2 _mtv, int distancia_minima = 100)
+    {
+        if(poligono_de_colision.EstaColisionandoConMtv(otra_entidad.poligono_de_colision, distancia_minima, out Vector2 mtv))
+        {
+            _mtv = mtv;
+            return true;
+        }
+        else
+        {
+            _mtv = mtv;
+            return false;
+        }
+    }
+    //------colisiones sin logica esxtra (solo devuelven bools y algun vector o entidad)--------------------------
+
+    //------colisiones con efectos extra (modifican las propiedades de las entidades)-----------------------------
+    public void ColisionConEntidadSolida(Entidad entidadAColisionar, int distancia_minima = 100)
+    {
+        if (EstaColisionandoMtv(entidadAColisionar, out Vector2 _mtv, distancia_minima))
+            {
+                posicion = posicion - _mtv;
+                ActualizarPoligonoDeColisionPosicion();
+            }
+    }
+    public void ColisionConEntidadSolida(List<Entidad> entidadesAColisionar, int distancia_minima = 100)
+    {
+        foreach (Entidad item in entidadesAColisionar)
+        {
+            if (EstaColisionandoMtv(item, out Vector2 _mtv, distancia_minima))
+            {
+                posicion = posicion - _mtv;
+                ActualizarPoligonoDeColisionPosicion();
+            }
+        }
+        
+    }
+    //------colisiones con efectos extra (modifican las propiedades de las entidades)-----------------------------
+
+    //------Colisiones y poligonos------------------------------------------------------------------------------------------
 
     //------Updates-----------------------------------
     public void Update(KeyboardState teclado, GameTime gameTime, bool importaSiEstaVivo = true)
     {
-        if(importaSiEstaVivo == true && vida_actual <= 0)
+        if (importaSiEstaVivo == true && vida_actual <= 0)
         {
-            
+
         }
         else
         {
+
             MovimientoTeclas(teclado);
             angulo = angulo + velocidad_de_rotacion;
-            
 
             posicion = posicion + velocidad;
-            ActualizarPoligonoDeColision(posicion);
+            ActualizarPoligonoDeColisionVelocidad();
             tiempo_de_existencia = tiempo_de_existencia + Convert.ToSingle(gameTime.ElapsedGameTime.TotalSeconds);
+
         }
     }
     public void Update(GameTime gameTime, bool importaSiEstaVivo = true)
@@ -405,7 +447,7 @@ public class Entidad
         velocidad = velocidad + aceleracion;
         angulo = angulo + velocidad_de_rotacion;
         posicion = posicion + velocidad;
-        ActualizarPoligonoDeColision(posicion);
+        ActualizarPoligonoDeColisionVelocidad();
         tiempo_de_existencia = tiempo_de_existencia + Convert.ToSingle(gameTime.ElapsedGameTime.TotalSeconds);
 
     }
@@ -419,7 +461,7 @@ public class Entidad
             angulo = angulo + velocidad_de_rotacion;
             posicion = posicion + velocidad_de_destino;
         }
-        ActualizarPoligonoDeColision(posicion);
+        ActualizarPoligonoDeColisionVelocidad();
         tiempo_de_existencia = tiempo_de_existencia + Convert.ToSingle(gameTime.ElapsedGameTime.TotalSeconds);
 
     }
