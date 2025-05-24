@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework.Graphics;
 public class Poligonos
 {
     public List<Vector2> vertices;
-    public Vector2 posicionDeOrigen;
     public float angulo;
     public float multiplicadorDeTamanoX;
     public float multiplicadorDeTamanoY;
@@ -17,8 +16,6 @@ public class Poligonos
         float angulo = 0,
         float multiplicadorDeTamanoX = 1,
         float multiplicadorDeTamanoY = 1,
-        Vector2 posicionDeOrigen = new Vector2(),
-        bool colocarSegunCentroide = false,
         Vector2 centroide = new Vector2()
 
     )
@@ -26,7 +23,6 @@ public class Poligonos
         this.angulo = angulo;
         this.multiplicadorDeTamanoX = multiplicadorDeTamanoX;
         this.multiplicadorDeTamanoY = multiplicadorDeTamanoY;
-        this.posicionDeOrigen = posicionDeOrigen;
         this.vertices = new List<Vector2>();
 
         if (vertices == null)
@@ -39,11 +35,11 @@ public class Poligonos
                 new Vector2(0, 64)
 
             };
-            ColocarVertices(vector2s, colocarSegunCentroide, centroide);
+            ColocarVertices(vector2s, centroide);
         }
         else
         {
-            ColocarVertices(vertices, colocarSegunCentroide, centroide);
+            ColocarVertices(vertices, centroide);
         }
 
     }
@@ -61,8 +57,7 @@ public class Poligonos
             vertices: copiaDeVertices,
             angulo: poligonoAClonar.angulo,
             multiplicadorDeTamanoX: poligonoAClonar.multiplicadorDeTamanoX,
-            multiplicadorDeTamanoY: poligonoAClonar.multiplicadorDeTamanoY,
-            posicionDeOrigen: poligonoAClonar.posicionDeOrigen
+            multiplicadorDeTamanoY: poligonoAClonar.multiplicadorDeTamanoY
         );
 
         return poligono_a_regresar;
@@ -70,42 +65,30 @@ public class Poligonos
     //Constructores--------------------------------------------------------------
 
     //Colocar vertices al construir----------------------------------------------
-    public void ColocarVertices(List<Vector2> verticesAColocar, bool utilizaCentroide = false, Vector2 centroideAUtilizar = new Vector2())
+    public void ColocarVertices(List<Vector2> verticesAColocar, Vector2 centroideAUtilizar = new Vector2())
     {
         Vector2 escala = new Vector2(multiplicadorDeTamanoX, multiplicadorDeTamanoY);
         List<Vector2> verticesTemporales = new List<Vector2>();
-        Vector2 vectorTemporal = new Vector2();
-        if (utilizaCentroide == false)
+
+        foreach (Vector2 item in verticesAColocar)
         {
-            foreach (Vector2 item in verticesAColocar)
-            {
-                vectorTemporal = (item * escala) + posicionDeOrigen;
-                verticesTemporales.Add(vectorTemporal);
-            }
-            this.vertices = verticesTemporales;
+            verticesTemporales.Add(item * escala);
         }
-        else
+
+        Vector2 centroideTemporal = CalcularCentroide(verticesTemporales);
+        Vector2 desplazamiento = centroideAUtilizar - centroideTemporal;
+
+        for (int i = 0; i < verticesTemporales.Count; i++)
         {
-            foreach (Vector2 item in verticesAColocar)
-            {
-                verticesTemporales.Add(item * escala);
-            }
-
-            Vector2 centroideTemporal = CalcularCentroide(verticesTemporales);
-            Vector2 desplazamiento = (posicionDeOrigen + centroideAUtilizar) - centroideTemporal;
-
-            for (int i = 0; i < verticesTemporales.Count; i++)
-            {
-                verticesTemporales[i] = verticesTemporales[i] + desplazamiento;
-            }
-
-            this.vertices = verticesTemporales;
+            verticesTemporales[i] = verticesTemporales[i] + desplazamiento;
         }
+
+        this.vertices = verticesTemporales;
     }
     //Colocar vertices al construir----------------------------------------------
 
     //Actualizar Vertices--------------------------------------------------------
-    public void ActualizarVertices(float anguloASeguir, Vector2 velocidad)
+    public void ActualizarVerticesVelocidad(float anguloASeguir, Vector2 velocidad)
     {
         List<Vector2> verticesTemporales = new List<Vector2>();
         foreach (Vector2 item in vertices)
@@ -114,6 +97,20 @@ public class Poligonos
         }
         vertices = verticesTemporales;
         Rotar(anguloASeguir, CalcularCentroide());
+    }
+
+    public void ActualizarVerticesPosicion(float anguloASeguir, Vector2 nuevaPosicion)
+    {
+        Vector2 centroideActual = CalcularCentroide();
+        Vector2 desplazamiento = nuevaPosicion - centroideActual;
+
+        List<Vector2> verticesTemporales = new List<Vector2>();
+        foreach (Vector2 item in vertices)
+        {
+            verticesTemporales.Add(item + desplazamiento);
+        }
+        vertices = verticesTemporales;
+        Rotar(anguloASeguir, nuevaPosicion);
     }
     //Actualizar Vertices--------------------------------------------------------
 

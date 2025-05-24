@@ -55,10 +55,10 @@ public class Space_Invadesnt : Game
         pixel.SetData(new[] { Color.White });
 
         temporizador = 0;
-        jugador = new Entidad(new Vector2(400,400), Content.Load<Texture2D>("Imagenes/Jugador/nave_ncpu"), offset_angulo: Convert.ToSingle(Math.PI/2), fuerza_de_aceleracion: 0.1f, vida_actual: 1, multiplicador_de_colision_x: 0.4f, multiplicador_de_colision_y: 0.8f);
+        jugador = new Entidad(new Vector2(400,400), Content.Load<Texture2D>("Imagenes/Jugador/nave_ncpu"), offset_angulo: Convert.ToSingle(Math.PI/2), fuerza_de_aceleracion: 0.1f, vida_actual: 1, multiplicador_de_colision_x: 0.4f, multiplicador_de_colision_y: 0.8f, cantidadDeFriccion:0.95f);
         enemigo = new Entidad(imagen: Content.Load<Texture2D>("Imagenes/Enemigos/asteroide"), velocidad: new Vector2(0,1), ID: 1, vida_actual: 1, multiplicador_de_colision_x: 0.9f, multiplicador_de_colision_y: 0.9f);
         disparo = new Entidad(new Vector2(100,100), Content.Load<Texture2D>("Imagenes/Balas/disparo1"), vida_actual: 1, velocidad: new Vector2(20,20), multiplicador_de_colision_x: 0.5f, multiplicador_de_colision_y: 0.5f);
-        pared = new Entidad(posicion: new Vector2(200, 350), imagen: Content.Load<Texture2D>("Imagenes/Balas/disparo1"), multiplicador_de_colision_x: 0.5f, multiplicador_de_colision_y: 12f);
+        pared = new Entidad(posicion: new Vector2(200, 350), imagen: Content.Load<Texture2D>("Imagenes/Balas/disparo1"), multiplicador_de_colision_x: 0.5f, multiplicador_de_colision_y: 12f, velocidad: new Vector2(1f, 0f));
         balas = new List<Entidad>();
 
         veces_muerto = 0;
@@ -112,9 +112,9 @@ public class Space_Invadesnt : Game
 
         posicion_mouse = new Vector2(mouseState.X, mouseState.Y);
 
-        creador_De_Entidades.Update(gameTime, new Vector2(-100,0), true);
-        creador_De_Entidades2.Update(gameTime, new Vector2(0,820), false);
-        creador_De_Entidades3.Update(gameTime, new Vector2(0,-100), false);
+        //creador_De_Entidades.Update(gameTime, new Vector2(-100,0), true);
+        //creador_De_Entidades2.Update(gameTime, new Vector2(0,820), false);
+        //creador_De_Entidades3.Update(gameTime, new Vector2(0,-100), false);
         pared.Update(gameTime, true);
 
         if (jugador.vida_actual > 0)
@@ -124,12 +124,7 @@ public class Space_Invadesnt : Game
             jugador.poligono_de_colision.Rotar(posicion_mouse, jugador.poligono_de_colision.CalcularCentroide());
             jugador.Update(keyboardState, gameTime);
 
-            if (jugador.EstaColisionandoMtv(pared, out Vector2 _mtv, 500))
-            {
-                jugador.posicion = jugador.posicion - _mtv;
-                jugador.velocidad = Vector2.Zero - _mtv;
-                jugador.ActualizarPoligonoDeColision();
-            }
+            jugador.ColisionConEntidadSolida(pared, 500);
 
             if (jugador.EstaColisionando(creador_De_Entidades.lista_entidades) || jugador.EstaColisionando(creador_De_Entidades2.lista_entidades) || jugador.EstaColisionando(creador_De_Entidades3.lista_entidades))
                 {
