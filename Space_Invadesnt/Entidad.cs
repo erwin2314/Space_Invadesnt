@@ -26,6 +26,7 @@ public class Entidad
     public int ID;
     public Poligonos poligono_de_colision;
     public float cantidadDeFriccion; // el rango va de 0 (se para de inmediato), a 1 (no se detiene nunca) o -1 (se invierte la direccion en la que se mueve?)
+    public float velocidadMaxima;
 
     //---------Constructores----------------------------------------
     public Entidad
@@ -47,7 +48,8 @@ public class Entidad
         float multiplicador_de_colision_x = 1,
         float multiplicador_de_colision_y = 1,
         Vector2 origen_de_poligono_colision = new Vector2(),
-        float cantidadDeFriccion = 1
+        float cantidadDeFriccion = 1,
+        float velocidadMaxima = 10f
     )
     {
         this.posicion = posicion;
@@ -59,6 +61,7 @@ public class Entidad
         this.vida_actual = vida_actual;
         this.ID = ID;
         this.cantidadDeFriccion = cantidadDeFriccion;
+        this.velocidadMaxima = velocidadMaxima;
 
         this.velocidad = velocidad;
         this.aceleracion = aceleracion;
@@ -123,12 +126,12 @@ public class Entidad
             ID: this.ID,
             multiplicador_de_colision_x: this.poligono_de_colision.multiplicadorDeTamanoX,
             multiplicador_de_colision_y: this.poligono_de_colision.multiplicadorDeTamanoY,
-            cantidadDeFriccion: this.cantidadDeFriccion
+            cantidadDeFriccion: this.cantidadDeFriccion,
+            velocidadMaxima: this.velocidadMaxima
         );
 
         entidad_a_regresar.poligono_de_colision = this.poligono_de_colision.Clonar(this.poligono_de_colision);
 
-        // Copiar manualmente los valores si ya estaban modificados
         entidad_a_regresar.origen_de_imagen = this.origen_de_imagen;
         entidad_a_regresar.rectangulo_de_imagen = this.rectangulo_de_imagen;
 
@@ -240,30 +243,34 @@ public class Entidad
         if (teclado.IsKeyDown(Keys.W))
         {
             aceleracion.Y = aceleracion.Y - fuerza_de_aceleracion;
-            velocidad = (velocidad + aceleracion) /** cantidadDeFriccion*/;
+            velocidad = (velocidad + aceleracion);
             aceleracion = new Vector2(0, 0);
         }
         if (teclado.IsKeyDown(Keys.S))
         {
             aceleracion.Y = aceleracion.Y + fuerza_de_aceleracion;
-            velocidad = (velocidad + aceleracion) /** cantidadDeFriccion*/;
+            velocidad = (velocidad + aceleracion);
             aceleracion = new Vector2(0, 0);
         }
         if (teclado.IsKeyDown(Keys.D))
         {
             aceleracion.X = aceleracion.X + fuerza_de_aceleracion;
-            velocidad = (velocidad + aceleracion) /** cantidadDeFriccion*/;
+            velocidad = (velocidad + aceleracion);
             aceleracion = new Vector2(0, 0);
         }
         if (teclado.IsKeyDown(Keys.A))
         {
             aceleracion.X = aceleracion.X - fuerza_de_aceleracion;
-            velocidad = (velocidad + aceleracion) /** cantidadDeFriccion*/;
+            velocidad = (velocidad + aceleracion);
             aceleracion = new Vector2(0, 0);
         }
 
         if (teclado.GetPressedKeys().Length == 0)
         {
+            if (velocidad.Length() < 0.1f)
+            {
+                velocidad = new Vector2();
+            }
             velocidad = (velocidad + aceleracion) * cantidadDeFriccion;
         }
     }
@@ -435,6 +442,12 @@ public class Entidad
             MovimientoTeclas(teclado);
             angulo = angulo + velocidad_de_rotacion;
 
+            if (velocidad.Length() > velocidadMaxima)
+            {
+                velocidad = Vector2.Normalize(velocidad);
+                velocidad = velocidad * velocidadMaxima;
+            }
+
             posicion = posicion + velocidad;
             ActualizarPoligonoDeColisionVelocidad();
             tiempo_de_existencia = tiempo_de_existencia + Convert.ToSingle(gameTime.ElapsedGameTime.TotalSeconds);
@@ -445,6 +458,12 @@ public class Entidad
     {
         
         velocidad = velocidad + aceleracion;
+        if (velocidad.Length() > velocidadMaxima)
+            {
+                velocidad = Vector2.Normalize(velocidad);
+                velocidad = velocidad * velocidadMaxima;
+            }
+
         angulo = angulo + velocidad_de_rotacion;
         posicion = posicion + velocidad;
         ActualizarPoligonoDeColisionVelocidad();
@@ -456,12 +475,17 @@ public class Entidad
 
         
         var velocidad_de_destino = MoverseAUnPunto(punto);
+        if (velocidad.Length() > velocidadMaxima)
+            {
+                velocidad = Vector2.Normalize(velocidad);
+                velocidad = velocidad * velocidadMaxima;
+            }
         if (velocidad_de_destino != Vector2.Zero)
         {
             angulo = angulo + velocidad_de_rotacion;
             posicion = posicion + velocidad_de_destino;
+            ActualizarPoligonoDeColisionVelocidad();
         }
-        ActualizarPoligonoDeColisionVelocidad();
         tiempo_de_existencia = tiempo_de_existencia + Convert.ToSingle(gameTime.ElapsedGameTime.TotalSeconds);
 
     }
@@ -499,15 +523,15 @@ public class Entidad
         return entidad;
     }
     //------Crear Entidades---------------------------
-    public void Draw(SpriteBatch spriteBatch)
+    public void Draw(SpriteBatch spriteBatch, Camara camara)
     {
-        spriteBatch.Begin();
+        spriteBatch.Begin(transformMatrix: camara.ObtenerTransformacion());
         spriteBatch.Draw(imagen, posicion, rectangulo_de_imagen, Color.White, angulo, origen_de_imagen, 1.0f, SpriteEffects.None, prioridad_de_dibujado);
         spriteBatch.End();
     }
-    public void DrawColision(SpriteBatch spriteBatch, Texture2D pixel)
+    public void DrawColision(SpriteBatch spriteBatch, Texture2D pixel, Camara camara)
     {
-        poligono_de_colision.Draw(spriteBatch, pixel);
+        poligono_de_colision.Draw(spriteBatch, pixel, camara);
     }
     
 }

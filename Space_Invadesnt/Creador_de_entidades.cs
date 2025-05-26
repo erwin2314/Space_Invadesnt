@@ -53,12 +53,12 @@ public class Creador_de_entidades
     }
     //-------Constructores----------------------------------------------------------
 
-    public void Draw(SpriteBatch spriteBatch, Texture2D pixel)
+    public void Draw(SpriteBatch spriteBatch, Texture2D pixel, Camara camara)
     {
         foreach (Entidad e in lista_entidades)
         {
-            e.Draw(spriteBatch);
-            e.DrawColision(spriteBatch, pixel);
+            e.Draw(spriteBatch, camara);
+            e.DrawColision(spriteBatch, pixel, camara);
         }
     }
     

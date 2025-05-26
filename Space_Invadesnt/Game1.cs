@@ -38,6 +38,7 @@ public class Space_Invadesnt : Game
     public int veces_muerto;
     public Reproductor_de_sonido reproductor_De_Sonido;
     public Texture2D pixel;
+    public Camara camara;
     public Space_Invadesnt()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -53,12 +54,13 @@ public class Space_Invadesnt : Game
     {
         pixel = new Texture2D(GraphicsDevice, 1, 1);
         pixel.SetData(new[] { Color.White });
+        camara = new Camara(GraphicsDevice.Viewport);
 
         temporizador = 0;
-        jugador = new Entidad(new Vector2(400,400), Content.Load<Texture2D>("Imagenes/Jugador/nave_ncpu"), offset_angulo: Convert.ToSingle(Math.PI/2), fuerza_de_aceleracion: 0.1f, vida_actual: 1, multiplicador_de_colision_x: 0.4f, multiplicador_de_colision_y: 0.8f, cantidadDeFriccion:0.95f);
+        jugador = new Entidad(new Vector2(400,400), Content.Load<Texture2D>("Imagenes/Jugador/nave_ncpu"), offset_angulo: Convert.ToSingle(Math.PI/2), fuerza_de_aceleracion: 0.1f, vida_actual: 1, multiplicador_de_colision_x: 0.4f, multiplicador_de_colision_y: 0.8f, cantidadDeFriccion:0.95f, velocidadMaxima:5f);
         enemigo = new Entidad(imagen: Content.Load<Texture2D>("Imagenes/Enemigos/asteroide"), velocidad: new Vector2(0,1), ID: 1, vida_actual: 1, multiplicador_de_colision_x: 0.9f, multiplicador_de_colision_y: 0.9f);
-        disparo = new Entidad(new Vector2(100,100), Content.Load<Texture2D>("Imagenes/Balas/disparo1"), vida_actual: 1, velocidad: new Vector2(20,20), multiplicador_de_colision_x: 0.5f, multiplicador_de_colision_y: 0.5f);
-        pared = new Entidad(posicion: new Vector2(200, 350), imagen: Content.Load<Texture2D>("Imagenes/Balas/disparo1"), multiplicador_de_colision_x: 0.5f, multiplicador_de_colision_y: 12f, velocidad: new Vector2(1f, 0f));
+        disparo = new Entidad(new Vector2(100,100), Content.Load<Texture2D>("Imagenes/Balas/disparo1"), vida_actual: 1, velocidad: new Vector2(20,20), multiplicador_de_colision_x: 0.5f, multiplicador_de_colision_y: 0.5f, velocidadMaxima: 30f);
+        pared = new Entidad(posicion: new Vector2(0, 350), imagen: Content.Load<Texture2D>("Imagenes/Balas/disparo1"), multiplicador_de_colision_x: 0.5f, multiplicador_de_colision_y: 12f);
         balas = new List<Entidad>();
 
         veces_muerto = 0;
@@ -99,6 +101,11 @@ public class Space_Invadesnt : Game
         
 
         mouseState = Mouse.GetState();
+        Vector2 screenMousePos = new Vector2(mouseState.X, mouseState.Y);
+        Matrix cameraMatrix = camara.ObtenerTransformacion();
+        Matrix inverseCameraMatrix = Matrix.Invert(cameraMatrix); // Invierte la matriz
+        Vector2 worldMousePos = Vector2.Transform(screenMousePos, inverseCameraMatrix);
+
         if ((mouseState.LeftButton == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Space)) & temporizador2 > 1 & jugador.vida_actual > 0)
         {
             balas.Add(jugador.DispararEntidad(disparo, posicion_mouse, jugador));
@@ -110,12 +117,13 @@ public class Space_Invadesnt : Game
             temporizador2 = gameTime.ElapsedGameTime.TotalSeconds + temporizador2;
         }
 
-        posicion_mouse = new Vector2(mouseState.X, mouseState.Y);
+        posicion_mouse = new Vector2(worldMousePos.X, worldMousePos.Y);
 
-        //creador_De_Entidades.Update(gameTime, new Vector2(-100,0), true);
-        //creador_De_Entidades2.Update(gameTime, new Vector2(0,820), false);
-        //creador_De_Entidades3.Update(gameTime, new Vector2(0,-100), false);
+        creador_De_Entidades.Update(gameTime, new Vector2(-100,0), true);
+        creador_De_Entidades2.Update(gameTime, new Vector2(0,820), false);
+        creador_De_Entidades3.Update(gameTime, new Vector2(0,-100), false);
         pared.Update(gameTime, true);
+        camara.Update(jugador.posicion, (float)gameTime.ElapsedGameTime.TotalSeconds);
 
         if (jugador.vida_actual > 0)
         {
@@ -127,9 +135,9 @@ public class Space_Invadesnt : Game
             jugador.ColisionConEntidadSolida(pared, 500);
 
             if (jugador.EstaColisionando(creador_De_Entidades.lista_entidades) || jugador.EstaColisionando(creador_De_Entidades2.lista_entidades) || jugador.EstaColisionando(creador_De_Entidades3.lista_entidades))
-                {
-                    jugador.RecibirDaño(1);
-                }
+            {
+                jugador.RecibirDaño(1);
+            }
 
         }
         else if (veces_muerto == 0)
@@ -188,22 +196,22 @@ public class Space_Invadesnt : Game
         _spriteBatch.Draw(fondo,new Rectangle(0,0,1280,720),Color.White);
         _spriteBatch.DrawString(arial, Convert.ToString(Convert.ToInt32(puntuacion)),new Vector2(0,0),Color.White);
         _spriteBatch.End();
-        creador_De_Entidades.Draw(_spriteBatch, pixel);
-        creador_De_Entidades2.Draw(_spriteBatch, pixel);
-        creador_De_Entidades3.Draw(_spriteBatch, pixel);
-        pared.Draw(_spriteBatch);
-        pared.DrawColision(_spriteBatch, pixel);
+        creador_De_Entidades.Draw(_spriteBatch, pixel, camara);
+        creador_De_Entidades2.Draw(_spriteBatch, pixel, camara);
+        creador_De_Entidades3.Draw(_spriteBatch, pixel, camara);
+        pared.Draw(_spriteBatch, camara);
+        pared.DrawColision(_spriteBatch, pixel, camara);
         foreach (Entidad item in balas)
         {
-            item.Draw(_spriteBatch);
-            item.DrawColision(_spriteBatch, pixel);
+            item.Draw(_spriteBatch, camara);
+            item.DrawColision(_spriteBatch, pixel, camara);
         }
 
 
         if(jugador.vida_actual > 0)
         {
-            jugador.Draw(_spriteBatch);
-            jugador.DrawColision(_spriteBatch, pixel);
+            jugador.Draw(_spriteBatch, camara);
+            jugador.DrawColision(_spriteBatch, pixel, camara);
         }
         base.Draw(gameTime);
     }

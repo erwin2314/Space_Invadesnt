@@ -454,9 +454,9 @@ public class Poligonos
     }
     //Poligono contiene x--------------------------------------------------------
     
-    public void Draw(SpriteBatch spriteBatch,Texture2D pixel)
+    public void Draw(SpriteBatch spriteBatch,Texture2D pixel, Camara camara)
     {
-        spriteBatch.Begin();
+        spriteBatch.Begin(transformMatrix: camara.ObtenerTransformacion());
 
         for (int i = 0; i < vertices.Count; i++)
         {
