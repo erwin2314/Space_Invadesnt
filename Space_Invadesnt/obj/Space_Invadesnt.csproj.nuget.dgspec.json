@@ -1,31 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\carlo\\OneDrive\\Desktop\\Monogame\\Space Invadernt\\Space_Invadesnt\\Space_Invadesnt\\Space_Invadesnt.csproj": {}
+    "C:\\Space Invadesnt\\Space_Invadesnt\\Space_Invadesnt\\Space_Invadesnt.csproj": {}
   },
   "projects": {
-    "C:\\Users\\carlo\\OneDrive\\Desktop\\Monogame\\Space Invadernt\\Space_Invadesnt\\Space_Invadesnt\\Space_Invadesnt.csproj": {
+    "C:\\Space Invadesnt\\Space_Invadesnt\\Space_Invadesnt\\Space_Invadesnt.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\carlo\\OneDrive\\Desktop\\Monogame\\Space Invadernt\\Space_Invadesnt\\Space_Invadesnt\\Space_Invadesnt.csproj",
+        "projectUniqueName": "C:\\Space Invadesnt\\Space_Invadesnt\\Space_Invadesnt\\Space_Invadesnt.csproj",
         "projectName": "Space_Invadesnt",
-        "projectPath": "C:\\Users\\carlo\\OneDrive\\Desktop\\Monogame\\Space Invadernt\\Space_Invadesnt\\Space_Invadesnt\\Space_Invadesnt.csproj",
-        "packagesPath": "C:\\Users\\carlo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\carlo\\OneDrive\\Desktop\\Monogame\\Space Invadernt\\Space_Invadesnt\\Space_Invadesnt\\obj\\",
+        "projectPath": "C:\\Space Invadesnt\\Space_Invadesnt\\Space_Invadesnt\\Space_Invadesnt.csproj",
+        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
+        "outputPath": "C:\\Space Invadesnt\\Space_Invadesnt\\Space_Invadesnt\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\carlo\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -43,8 +37,7 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        },
-        "SdkAnalysisLevel": "9.0.200"
+        }
       },
       "frameworks": {
         "net8.0": {
@@ -70,30 +63,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[8.0.14, 8.0.14]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[8.0.14, 8.0.14]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[8.0.14, 8.0.14]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[8.0.14, 8.0.14]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.202/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.411/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

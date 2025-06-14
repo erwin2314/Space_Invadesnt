@@ -4,26 +4,26 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/carlo/OneDrive/Desktop/Monogame/Space Invadernt/Space_Invadesnt/Space_Invadesnt/Content/Imagenes/Balas/disparo1.png</File>
-    <File>C:/Users/carlo/OneDrive/Desktop/Monogame/Space Invadernt/Space_Invadesnt/Space_Invadesnt/Content/Imagenes/Enemigos/asteroide.png</File>
-    <File>C:/Users/carlo/OneDrive/Desktop/Monogame/Space Invadernt/Space_Invadesnt/Space_Invadesnt/Content/Imagenes/Fondos/fondo1.png</File>
-    <File>C:/Users/carlo/OneDrive/Desktop/Monogame/Space Invadernt/Space_Invadesnt/Space_Invadesnt/Content/Imagenes/Fondos/fondo2.jpg</File>
-    <File>C:/Users/carlo/OneDrive/Desktop/Monogame/Space Invadernt/Space_Invadesnt/Space_Invadesnt/Content/Imagenes/Jugador/nave_ncpu.png</File>
-    <File>C:/Users/carlo/OneDrive/Desktop/Monogame/Space Invadernt/Space_Invadesnt/Space_Invadesnt/Content/Imagenes/PlaceHolder/cuadrado_blanco.png</File>
-    <File>C:/Users/carlo/OneDrive/Desktop/Monogame/Space Invadernt/Space_Invadesnt/Space_Invadesnt/Content/Sonido/Canciones/musica_fondo1.mp3</File>
-    <File>C:/Users/carlo/OneDrive/Desktop/Monogame/Space Invadernt/Space_Invadesnt/Space_Invadesnt/Content/Sonido/Canciones/musica_fondo2.mp3</File>
-    <File>C:/Users/carlo/OneDrive/Desktop/Monogame/Space Invadernt/Space_Invadesnt/Space_Invadesnt/Content/Sonido/Efectos de sonido/disparo1.wav</File>
-    <File>C:/Users/carlo/OneDrive/Desktop/Monogame/Space Invadernt/Space_Invadesnt/Space_Invadesnt/Content/Sonido/Efectos de sonido/disparo2.wav</File>
-    <File>C:/Users/carlo/OneDrive/Desktop/Monogame/Space Invadernt/Space_Invadesnt/Space_Invadesnt/Content/Sonido/Efectos de sonido/disparo3.wav</File>
-    <File>C:/Users/carlo/OneDrive/Desktop/Monogame/Space Invadernt/Space_Invadesnt/Space_Invadesnt/Content/Sonido/Efectos de sonido/explosion1.wav</File>
-    <File>C:/Users/carlo/OneDrive/Desktop/Monogame/Space Invadernt/Space_Invadesnt/Space_Invadesnt/Content/Sonido/Efectos de sonido/explosion2.wav</File>
-    <File>C:/Users/carlo/OneDrive/Desktop/Monogame/Space Invadernt/Space_Invadesnt/Space_Invadesnt/Content/Sonido/Efectos de sonido/explosion3.wav</File>
-    <File>C:/Users/carlo/OneDrive/Desktop/Monogame/Space Invadernt/Space_Invadesnt/Space_Invadesnt/Content/Sonido/Efectos de sonido/herido1.wav</File>
-    <File>C:/Users/carlo/OneDrive/Desktop/Monogame/Space Invadernt/Space_Invadesnt/Space_Invadesnt/Content/Sonido/Efectos de sonido/muerte1.wav</File>
-    <File>C:/Users/carlo/OneDrive/Desktop/Monogame/Space Invadernt/Space_Invadesnt/Space_Invadesnt/Content/Sonido/Efectos de sonido/muerte2.wav</File>
-    <File>C:/Users/carlo/OneDrive/Desktop/Monogame/Space Invadernt/Space_Invadesnt/Space_Invadesnt/Content/Sonido/Efectos de sonido/muerte3.wav</File>
-    <File>C:/Users/carlo/OneDrive/Desktop/Monogame/Space Invadernt/Space_Invadesnt/Space_Invadesnt/Content/Sonido/Efectos de sonido/muerte4.wav</File>
-    <File>C:/Users/carlo/OneDrive/Desktop/Monogame/Space Invadernt/Space_Invadesnt/Space_Invadesnt/Content/Tipografias/File.spritefont</File>
+    <File>C:/Space Invadesnt/Space_Invadesnt/Space_Invadesnt/Content/Imagenes/Balas/disparo1.png</File>
+    <File>C:/Space Invadesnt/Space_Invadesnt/Space_Invadesnt/Content/Imagenes/Enemigos/asteroide.png</File>
+    <File>C:/Space Invadesnt/Space_Invadesnt/Space_Invadesnt/Content/Imagenes/Fondos/fondo1.png</File>
+    <File>C:/Space Invadesnt/Space_Invadesnt/Space_Invadesnt/Content/Imagenes/Fondos/fondo2.jpg</File>
+    <File>C:/Space Invadesnt/Space_Invadesnt/Space_Invadesnt/Content/Imagenes/Jugador/nave_ncpu.png</File>
+    <File>C:/Space Invadesnt/Space_Invadesnt/Space_Invadesnt/Content/Imagenes/PlaceHolder/cuadrado_blanco.png</File>
+    <File>C:/Space Invadesnt/Space_Invadesnt/Space_Invadesnt/Content/Sonido/Canciones/musica_fondo1.mp3</File>
+    <File>C:/Space Invadesnt/Space_Invadesnt/Space_Invadesnt/Content/Sonido/Canciones/musica_fondo2.mp3</File>
+    <File>C:/Space Invadesnt/Space_Invadesnt/Space_Invadesnt/Content/Sonido/Efectos de sonido/disparo1.wav</File>
+    <File>C:/Space Invadesnt/Space_Invadesnt/Space_Invadesnt/Content/Sonido/Efectos de sonido/disparo2.wav</File>
+    <File>C:/Space Invadesnt/Space_Invadesnt/Space_Invadesnt/Content/Sonido/Efectos de sonido/disparo3.wav</File>
+    <File>C:/Space Invadesnt/Space_Invadesnt/Space_Invadesnt/Content/Sonido/Efectos de sonido/explosion1.wav</File>
+    <File>C:/Space Invadesnt/Space_Invadesnt/Space_Invadesnt/Content/Sonido/Efectos de sonido/explosion2.wav</File>
+    <File>C:/Space Invadesnt/Space_Invadesnt/Space_Invadesnt/Content/Sonido/Efectos de sonido/explosion3.wav</File>
+    <File>C:/Space Invadesnt/Space_Invadesnt/Space_Invadesnt/Content/Sonido/Efectos de sonido/herido1.wav</File>
+    <File>C:/Space Invadesnt/Space_Invadesnt/Space_Invadesnt/Content/Sonido/Efectos de sonido/muerte1.wav</File>
+    <File>C:/Space Invadesnt/Space_Invadesnt/Space_Invadesnt/Content/Sonido/Efectos de sonido/muerte2.wav</File>
+    <File>C:/Space Invadesnt/Space_Invadesnt/Space_Invadesnt/Content/Sonido/Efectos de sonido/muerte3.wav</File>
+    <File>C:/Space Invadesnt/Space_Invadesnt/Space_Invadesnt/Content/Sonido/Efectos de sonido/muerte4.wav</File>
+    <File>C:/Space Invadesnt/Space_Invadesnt/Space_Invadesnt/Content/Tipografias/File.spritefont</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />

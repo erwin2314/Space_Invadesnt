@@ -75,3 +75,51 @@ C:\Users\carlo\OneDrive\Desktop\Monogame\Space Invadernt\Space_Invadesnt\Space_I
 C:\Users\carlo\OneDrive\Desktop\Monogame\Space Invadernt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Sonido\Canciones\musica_fondo1.xnb
 C:\Users\carlo\OneDrive\Desktop\Monogame\Space Invadernt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Sonido\Canciones\musica_fondo2.ogg
 C:\Users\carlo\OneDrive\Desktop\Monogame\Space Invadernt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Sonido\Canciones\musica_fondo2.xnb
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Imagenes\Balas\disparo1.xnb
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Imagenes\Enemigos\asteroide.xnb
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Imagenes\Fondos\fondo1.xnb
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Imagenes\Fondos\fondo2.xnb
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Imagenes\Jugador\nave_ncpu.xnb
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Imagenes\PlaceHolder\cuadrado_blanco.xnb
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Sonido\Canciones\musica_fondo1.ogg
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Sonido\Canciones\musica_fondo1.xnb
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Sonido\Canciones\musica_fondo2.ogg
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Sonido\Canciones\musica_fondo2.xnb
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Sonido\Efectos de sonido\disparo1.xnb
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Sonido\Efectos de sonido\disparo2.xnb
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Sonido\Efectos de sonido\disparo3.xnb
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Sonido\Efectos de sonido\explosion1.xnb
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Sonido\Efectos de sonido\explosion2.xnb
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Sonido\Efectos de sonido\explosion3.xnb
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Sonido\Efectos de sonido\herido1.xnb
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Sonido\Efectos de sonido\muerte1.xnb
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Sonido\Efectos de sonido\muerte2.xnb
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Sonido\Efectos de sonido\muerte3.xnb
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Sonido\Efectos de sonido\muerte4.xnb
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Content\Tipografias\File.xnb
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Space_Invadesnt.exe
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Space_Invadesnt.deps.json
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Space_Invadesnt.runtimeconfig.json
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Space_Invadesnt.dll
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\Space_Invadesnt.pdb
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\MonoGame.Framework.dll
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\NVorbis.dll
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\runtimes\linux-x64\native\libopenal.so.1
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\runtimes\osx\native\libopenal.1.dylib
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\runtimes\win-x64\native\soft_oal.dll
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\runtimes\win-x86\native\soft_oal.dll
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\runtimes\linux-x64\native\libSDL2-2.0.so.0
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\runtimes\osx\native\libSDL2.dylib
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\bin\Debug\net8.0\runtimes\win-x64\native\SDL2.dll
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\obj\Debug\net8.0\Space_Invadesnt.csproj.AssemblyReference.cache
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\obj\Debug\net8.0\Space_Invadesnt.GeneratedMSBuildEditorConfig.editorconfig
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\obj\Debug\net8.0\Space_Invadesnt.AssemblyInfoInputs.cache
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\obj\Debug\net8.0\Space_Invadesnt.AssemblyInfo.cs
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\obj\Debug\net8.0\Space_Invadesnt.csproj.CoreCompileInputs.cache
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\obj\Debug\net8.0\Space_Invadesnt.sourcelink.json
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\obj\Debug\net8.0\Space_In.98FF6918.Up2Date
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\obj\Debug\net8.0\Space_Invadesnt.dll
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\obj\Debug\net8.0\refint\Space_Invadesnt.dll
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\obj\Debug\net8.0\Space_Invadesnt.pdb
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\obj\Debug\net8.0\Space_Invadesnt.genruntimeconfig.cache
+C:\Space Invadesnt\Space_Invadesnt\Space_Invadesnt\obj\Debug\net8.0\ref\Space_Invadesnt.dll

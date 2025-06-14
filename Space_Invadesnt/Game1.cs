@@ -122,7 +122,7 @@ public class Space_Invadesnt : Game
         creador_De_Entidades.Update(gameTime, new Vector2(-100,0), true);
         creador_De_Entidades2.Update(gameTime, new Vector2(0,820), false);
         creador_De_Entidades3.Update(gameTime, new Vector2(0,-100), false);
-        pared.Update(gameTime, true);
+        
         camara.Update(jugador.posicion, (float)gameTime.ElapsedGameTime.TotalSeconds);
 
         if (jugador.vida_actual > 0)

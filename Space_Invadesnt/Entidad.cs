@@ -265,7 +265,11 @@ public class Entidad
             aceleracion = new Vector2(0, 0);
         }
 
-        if (teclado.GetPressedKeys().Length == 0)
+        if (teclado.IsKeyDown(Keys.A) || teclado.IsKeyDown(Keys.S) || teclado.IsKeyDown(Keys.D) || teclado.IsKeyDown(Keys.W))
+        {
+            
+        }
+        else
         {
             if (velocidad.Length() < 0.1f)
             {
